@@ -1,0 +1,1200 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<title>{{店铺名}} 1688 月度体检报告 · V1 · 月度体检报告</title>
+<style>
+@page {
+  size: A4;
+  margin: 16mm 14mm 18mm 14mm;
+  @bottom-center {
+    content: "{{店铺名}} 1688 月度体检报告 · V1 · 月度体检报告 · {{报告日期}} · 第 " counter(page) " / " counter(pages) " 页";
+    font-size: 9pt; color: #888;
+  }
+}
+* { box-sizing: border-box; margin: 0; padding: 0; }
+html, body {
+  font-family: "PingFang SC","Hiragino Sans GB","Microsoft YaHei",sans-serif;
+  font-size: 10.5pt; line-height: 1.65; color: #1d1d1f;
+}
+.cover {
+  page-break-after: always;
+  padding: 10mm 5mm 8mm 5mm;
+  background: linear-gradient(135deg,#fff 0%,#fff8f1 60%,#fde4cc 100%);
+  border-left: 6px solid #c9482b;
+}
+.cover .badge { display:inline-block; background:#c9482b; color:#fff; padding:2px 10px; font-size:9pt; letter-spacing:2px; font-weight:600; margin-bottom:5mm; }
+.cover h1 { font-size: 22pt; font-weight: 800; letter-spacing: 2px; line-height: 1.2; color: #2a1a0e; margin-bottom: 3mm; }
+.cover .subtitle { font-size: 10.5pt; color: #6b4a30; margin-bottom: 5mm; line-height: 1.55; }
+.cover .keyfacts { background:#fff; border:1px solid #c9482b; padding:3mm; margin-bottom:4mm; }
+.cover .keyfacts h3 { font-size: 10.5pt; color: #c9482b; margin-bottom: 2mm; }
+.cover .keyfacts table { width: 100%; font-size: 8.8pt; }
+.cover .keyfacts td { padding: 0.5mm 2mm; border-bottom: 1px dotted #d4c4ad; line-height: 1.35; }
+.cover .keyfacts td:first-child { color: #888; width: 38%; }
+.cover .keyfacts td:nth-child(2) { font-weight: 700; color: #c9482b; width: 30%; }
+.cover .keyfacts td:nth-child(3) { color: #5a8d4e; font-size: 8.5pt; }
+.cover .meta { border-top: 2px solid #c9482b; padding-top: 3mm; margin-top: 3mm; display: grid; grid-template-columns: 1fr 1fr; gap: 1.8mm 10mm; font-size: 9pt; }
+.cover .meta dt { color: #999; font-size: 8pt; letter-spacing: 1px; margin-bottom: 0.3mm; }
+.cover .meta dd { color: #2a1a0e; font-weight: 600; font-size: 9.5pt; }
+.cover .footer { text-align: right; font-size: 8pt; color: #999; letter-spacing: 1.5px; margin-top: 2mm; }
+
+section { margin-bottom: 6mm; }
+section.with-break { page-break-before: always; }
+h2 { font-size: 16pt; color: #c9482b; border-left: 5px solid #c9482b; padding-left: 4mm; margin: 5mm 0 3mm 0; font-weight: 700; page-break-after: avoid; break-after: avoid; }
+h3 { page-break-after: avoid; break-after: avoid; }
+h3 { font-size: 12.5pt; color: #2a1a0e; margin: 4mm 0 2mm 0; font-weight: 600; }
+h4 { font-size: 10.5pt; color: #6b4a30; margin: 3mm 0 1.5mm 0; font-weight: 600; }
+p { margin-bottom: 2mm; }
+ul, ol { margin-left: 6mm; margin-bottom: 2mm; }
+li { margin-bottom: 1mm; }
+strong { color: #c9482b; }
+em { font-style: normal; background: #fff3e6; padding: 0 2px; }
+
+.module {
+  border: 1px solid #e8d5bf;
+  border-radius: 4px;
+  padding: 5mm;
+  margin-bottom: 5mm;
+  background: #fffdfa;
+}
+.module-header { page-break-after: avoid; break-after: avoid; }
+.kv-row { page-break-inside: avoid; break-inside: avoid; }
+.kv-row .kv-box { page-break-inside: avoid; break-inside: avoid; }
+.callout h3, .kv-box h5 { page-break-after: avoid; break-after: avoid; }
+.callout, .kv-box { orphans: 1; widows: 1; }
+.module-header { display: flex; align-items: center; border-bottom: 1px dashed #c9482b; padding-bottom: 2mm; margin-bottom: 3mm; }
+.module-no { background: #c9482b; color: #fff; font-size: 11pt; font-weight: 700; padding: 2px 10px; margin-right: 4mm; }
+.module-title { font-size: 14pt; font-weight: 700; color: #2a1a0e; }
+.module-tag { margin-left: auto; font-size: 9pt; background: #fff3e6; color: #c9482b; padding: 2px 8px; border-radius: 10px; }
+
+.kv-row { display: grid; grid-template-columns: 1fr 1fr; gap: 3mm; margin: 3mm 0; }
+.kv-box { background: #fff; border: 1px solid #d4c4ad; padding: 2.5mm 3mm; font-size: 9.5pt; }
+.kv-box.scan { border-left: 4px solid #5a8d4e; }
+.kv-box.gap { border-left: 4px solid #c9482b; }
+.kv-box.next { border-left: 4px solid #d4a02a; }
+.kv-box h5 { font-size: 10pt; margin-bottom: 1.5mm; color: #2a1a0e; font-weight: 700; }
+
+table { width: 100%; border-collapse: collapse; margin: 2mm 0; font-size: 9.5pt; }
+table.matrix th, table.matrix td { border: 1px solid #d4c4ad; padding: 1.5mm 2.5mm; text-align: left; vertical-align: top; }
+table.matrix th { background: #c9482b; color: #fff; font-weight: 600; }
+table.matrix tr:nth-child(even) { background: #fbf6ee; }
+table.matrix td.right { text-align: right; }
+table.matrix td.center { text-align: center; }
+.tag-ok { background: #5a8d4e; color: #fff; padding: 1px 6px; border-radius: 8px; font-size: 8.5pt; }
+.tag-mid { background: #d4a02a; color: #fff; padding: 1px 6px; border-radius: 8px; font-size: 8.5pt; }
+.tag-gap { background: #c9482b; color: #fff; padding: 1px 6px; border-radius: 8px; font-size: 8.5pt; }
+.tag-good { background: #2c7a5c; color: #fff; padding: 1px 6px; border-radius: 8px; font-size: 8.5pt; }
+
+.callout { background: #fff3e6; border: 1px solid #c9482b; border-radius: 3px; padding: 4mm; margin: 3mm 0; }
+.callout h3 { color: #c9482b; margin-top: 0; }
+.callout.danger { background: #fdecea; border-color: #b13a26; }
+.callout.danger h3 { color: #b13a26; }
+.callout.good { background: #eef7ee; border-color: #5a8d4e; }
+.callout.good h3 { color: #5a8d4e; }
+
+.score-bar { display: flex; height: 8mm; margin: 2mm 0; border-radius: 2px; overflow: hidden; border: 1px solid #d4c4ad; }
+.score-bar .seg { display: flex; align-items: center; justify-content: center; color: #fff; font-size: 9pt; font-weight: 700; }
+.s-good { background: #5a8d4e; }
+.s-mid { background: #d4a02a; }
+.s-low { background: #c9482b; }
+
+.module, .callout { break-inside: avoid; }
+</style>
+</head>
+<body>
+
+<!-- =========================================================
+     ⚠️ 使用说明 · 渲染 PDF 前必读
+     =========================================================
+     本文件是 1688 店铺月度体检引擎的 V1 报告模板。
+     使用前需要做两类替换：
+
+     【1】占位符替换（必做 · 共 4 类，影响所有出现位置）
+     占位符               含义                       示例
+     {{店铺名}}            店铺简称                    金驰 / 杭州 XX
+     {{报告日期}}          本次报告日期                2026-04-26
+     {{3月战略目标日期}}    战略目标截止日期             2026-07-26
+     {{客户内部团队}}      客户内部团队名               金驰数字化 / XX 运营组
+
+     【2】示例数据替换（按需 · 替换为本次抓取的真实数据）
+     - 所有具体数字（4.0/5、46.1%、¥7.6万、第 1,020 名 等）
+     - 竞店名（瑞安姜氏 / 平阳时拓 / 温州同亨 / 广州盈塑等）→ 替换为本店铺真实流失对手
+     - 主推 SKU 数据（亚克力胶囊瓶 / 燕窝盒 等）→ 替换为本店铺真实主推商品
+     - 引流商品（鱼油/NMN/蛋白粉 等）→ 替换为本店铺真实关键词缺口
+
+     【3】保持不动（结构与方法论）
+     - 8 模块四段式结构（抓手 / 适配 / 自查 / 下一步动作）
+     - 4 附录章节（A 战略 / B 快照 / C 对手 / D 营销）
+     - 颜色编码 / 排版红线
+     - 数据采集 URL 表
+
+     【渲染命令】
+     "/Applications/Google Chrome.app/Contents/MacOS/Google Chrome" \
+       --headless --disable-gpu --no-pdf-header-footer \
+       --print-to-pdf="{{店铺名}}1688月度体检报告_V1_{{报告日期}}.pdf" \
+       "file:///path/to/月度体检报告_V1模板.html"
+
+     【验证】
+     mdimport <pdf> && mdls -name kMDItemNumberOfPages <pdf>
+     pdftoppm -f 1 -l 1 -r 100 <pdf> /tmp/check -png
+     用 Read 工具 OCR 检查封面排版
+
+     【红线】
+     - 不在生产前对外发送（数据敏感）
+     - 不修改方法论结构（影响所有店铺一致性）
+     ========================================================= -->
+
+<!-- 封面 -->
+<div class="cover">
+  <div>
+    <span class="badge">V1 · 月度体检报告</span>
+    <h1>{{店铺名}} 1688 月度体检报告<br>2026 年 4 月</h1>
+    <div class="subtitle">
+      8 模块 × 40+ 抓手 · 全维度实测数据填充<br>
+      新灯塔 5.0 + 30 天 vs 7 天双周期对比 + 本地对手收口<br>
+      产品标签盘点 + 金牌制造钻级 + 运费模板对照
+    </div>
+
+    <div class="keyfacts">
+      <h3>📍 一页抓住核心</h3>
+      <table>
+        <tr><td>新灯塔分（后台）</td><td>4.0 / 5</td><td>落后 48% 同行</td></tr>
+        <tr><td>商品 / 物流 / 售后 / 咨询</td><td>5.0 / 3.7 / 3.7 / 3.5</td><td>售后落后 61% 最差</td></tr>
+        <tr><td>近 30 天 GMV</td><td>¥243,779</td><td>持平同行 ¥262,906</td></tr>
+        <tr><td>近 7 天 GMV</td><td>¥145,453</td><td>反超同行 +109% ↑↑</td></tr>
+        <tr><td>30 天 GMV 排名</td><td>第 82 名</td><td>包装-塑料二级</td></tr>
+        <tr><td>在线商品 / 动销</td><td>228 / 1</td><td>动销率 0.44% ⚠️</td></tr>
+        <tr><td>高级加权商品</td><td>103</td><td>资产巨大 · 待激活</td></tr>
+        <tr><td>金牌制造钻级 6 项</td><td>6/6</td><td>✅ 全部达成</td></tr>
+        <tr><td>P4P 优质计划</td><td>0</td><td>机会商品 105 待接</td></tr>
+        <tr><td>SKA 年框累消</td><td>¥7.6 万</td><td>月化超出节奏 4.5%</td></tr>
+        <tr><td>行业排名</td><td>第 1,020 名</td><td>升 3,052 名 ⭐⭐⭐</td></tr>
+        <tr><td>流失指数 TOP1（全国）</td><td>广州盈塑</td><td>用"鱼油 NMN 蛋白粉"抢人</td></tr>
+        <tr><td>流失指数 TOP1（本地）</td><td>平阳时拓包装</td><td>流量+交易双高 · 周度紧盯</td></tr>
+        <tr><td>{{店铺名}} TOP 流失商品</td><td>燕窝海参亚克力盒</td><td>3 人 100% 流失 · ¥61,740</td></tr>
+        <tr><td>搜索增长风口</td><td>瓦楞白卡纸礼盒书型盒</td><td>+70.54% 🔥 必须卡位</td></tr>
+        <tr><td><strong>本地头号对手（V14 修正）</strong></td><td><strong>平阳时拓三钻工厂</strong></td><td>回头率 62.6% / 销量 10w+×4 SKU</td></tr>
+        <tr><td>待处理违规</td><td>0 条</td><td>✅ 干净</td></tr>
+      </table>
+    </div>
+  </div>
+
+  <dl class="meta">
+    <div><dt>报告版本</dt><dd>V1.0</dd></div>
+    <div><dt>考核期</dt><dd>{{考核期}}</dd></div>
+    <div><dt>数据采集</dt><dd>{{报告日期}} 真实抓取</dd></div>
+    <div><dt>采集来源</dt><dd>新灯塔 / 生意参谋 / P4P / 工厂档案</dd></div>
+  </dl>
+
+  <div class="footer">CONFIDENTIAL · 内部使用 · 数据快照见 02-数据快照/{{报告日期}}/</div>
+</div>
+
+<!-- 前言 -->
+<section class="with-break">
+  <h2>前言 · V12 在做什么</h2>
+  <div class="callout">
+    <h3>V8 → V9 → V10 → V11 → V12 五步演进</h3>
+    <p><strong>V8（2026-04-21）</strong> 问题驱动作战版 · 询盘北极星 + 标题改造 + 关键词战略</p>
+    <p><strong>V9（{{报告日期}} 上午）</strong> 维度驱动框架版 · 8 模块 SOP 骨架</p>
+    <p><strong>V10（{{报告日期}} 中午）</strong> 数据实测版 · 把 V9 框架的每个抓手用真实数据填满</p>
+    <p><strong>V11（{{报告日期}} 下午）</strong> 本地对标增强版 · 30 天数据 + 标签盘点 + 本地对手收口 + 运费模板对照</p>
+    <p><strong>V12（本版 · {{报告日期}} 晚）</strong> 流失对手实测版 · V11 + 生意参谋"竞争"模块全量数据填充：</p>
+    <ul>
+      <li><strong>{{店铺名}}行业排名 1,020 / 升 3,052 名</strong> ⭐⭐⭐</li>
+      <li><strong>流失竞店 TOP10 完整列表</strong>（平台算法识别{{店铺名}}客户跳槽去向）</li>
+      <li><strong>TOP3 全国 + TOP3 本地 同行画像</strong>（30 天交易/流量/搜索/买家指数）</li>
+      <li><strong>同款竞品 TOP10 + 搜索增长趋势</strong>（瓦楞白卡书型盒 +70.54% 风口曝光）</li>
+      <li><strong>{{店铺名}}浏览流失商品 TOP10</strong>（被同行抢走的具体 SKU + 流失金额）</li>
+      <li><strong>详见附 C 专章</strong> · 模块 6 升级版</li>
+    </ul>
+  </div>
+
+  <div class="callout danger">
+    <h3>⚠️ 模型变更预警 · 原 BSR 体系已被新灯塔 5.0 替代</h3>
+    <p>用户原图描述的"BSR 总分 5 / 货描 5 / 响应 5 / 回头率 5"是 1688 旧考核体系。<strong>实际后台已升级为新灯塔 5.0</strong>，由 4 大体验维度 + 9 个二级指标构成。</p>
+    <table class="matrix" style="margin-top:3mm">
+      <tr><th>原 BSR 三大分</th><th>→ 新灯塔 5.0 维度</th><th>权重</th><th>{{店铺名}}分值</th></tr>
+      <tr><td>货描相符</td><td>商品体验（品质退款率/问题率）</td><td>15%</td><td><span class="tag-good">5.0 优</span></td></tr>
+      <tr><td>响应速度</td><td>咨询体验（3分钟响应/旺旺满意度）</td><td>20%</td><td><span class="tag-mid">3.5 中</span></td></tr>
+      <tr><td>—（新增）</td><td>物流体验（履约/时效/退款）</td><td>35%</td><td><span class="tag-mid">3.7 中</span></td></tr>
+      <tr><td>—（新增）</td><td>售后体验（处理时长/介入率）</td><td>30%</td><td><span class="tag-gap">3.7 差</span></td></tr>
+      <tr><td>回头率</td><td>不在新灯塔里 · 移到前台展示分</td><td>—</td><td>46.1% ↑</td></tr>
+    </table>
+    <p style="margin-top:3mm"><strong>底层逻辑</strong>：新体系把 65% 权重压在物流+售后两个维度上 — 这恰好是{{店铺名}}最弱的两块，决定了综合分上不去的根因。</p>
+  </div>
+</section>
+
+<!-- 模块 1 -->
+<section class="with-break">
+  <h2>模块 ① 店铺基础健康（实测）</h2>
+  <div class="module">
+    <div class="module-header">
+      <span class="module-no">01</span>
+      <span class="module-title">资质 · 风控 · 配置 · 服务</span>
+      <span class="module-tag"><span class="tag-good">达标</span></span>
+    </div>
+
+    <div class="kv-row">
+      <div class="kv-box scan">
+        <h5>📊 实测数据</h5>
+        ✅ 待处理违规 <strong>0 条</strong><br>
+        ✅ P4P 审核异常 0<br>
+        ✅ 准时履约率（前台）100%<br>
+        ✅ 实力商家 / 极速退款已开通<br>
+        ✅ 深度验厂通过 · SGS 认证（NGBWT00612317）<br>
+        ✅ 税务评级 A · 企业诚信全绿<br>
+        ✅ <strong>2026 上榜一钻工厂</strong> · 入围塑料盒实力榜第 5 名
+      </div>
+      <div class="kv-box gap">
+        <h5>⚠️ 仍待自查</h5>
+        ❓ 极限词风险（最佳/第一/国家级）从未扫描<br>
+        ❓ 子账号权限矩阵未盘点<br>
+        ❓ 运费模板偏远地区差异化未核<br>
+        ❓ 全店包邮未开通（平台提示+100% 转化加权）
+      </div>
+    </div>
+
+    <div class="callout good">
+      <h3>判定：底盘扎实 · 一钻冲二钻路径无违规风险</h3>
+      <p>违规维度全绿是{{店铺名}}能持续承接 SKA 年框 ¥100 万投入的安全垫。V8 提出的"刷单迁移到 SKA 付费"现在更安全了——后台审核异常 0 + 待处理违规 0，证明刷单流量没被识别为虚假交易。</p>
+    </div>
+
+    <div class="kv-box next">
+      <h5>🎯 下一步动作（5 月）</h5>
+      ① 极限词扫描全标题/详情页 · 用正则库一次过完<br>
+      ② 评估"全店包邮"开通成本 vs 流量加权收益 · 试算<br>
+      ③ 加工专区 tab 内填充定制能力矩阵图（详见模块 8）<br>
+      ④ <strong>运费模板对照官方建议</strong>（详见下方专项）
+    </div>
+
+    <h3 style="margin-top:5mm">运费模板对照官方建议（V11 新增）</h3>
+    <table class="matrix">
+      <tr><th>对照维度</th><th>1688 官方建议</th><th>{{店铺名}}自查重点</th></tr>
+      <tr><td>包装类重货首续重</td><td>5kg 以下 首重 8-12 元 · 续重 1.5-3 元/kg</td><td>是否每个商品复用同一份模板（错）</td></tr>
+      <tr><td>偏远地区</td><td>新疆/西藏/青海/海南单独设区 · 加价 50-100% 或显著标注</td><td>是否合并到一个全国通用模板（亏单风险）</td></tr>
+      <tr><td>大件包装套装</td><td>按体积重计算（实重 vs 体积重取大）</td><td>大盒型礼盒套装是否被低估亏运费</td></tr>
+      <tr><td>包邮起订量</td><td>建议设 100 件以上才包邮</td><td>当前包邮策略 vs 主推商品起订量</td></tr>
+      <tr><td>全店包邮</td><td>1688 提示"+100% 转化加权"</td><td>开通 ROI 试算（需主推 SKU 单笔数据）</td></tr>
+    </table>
+  </div>
+</section>
+
+<!-- 模块 2 -->
+<section class="with-break">
+  <h2>模块 ② 流量渠道（同行对比硬数据）</h2>
+  <div class="module">
+    <div class="module-header">
+      <span class="module-no">02</span>
+      <span class="module-title">展现 · 访问 · 转化 · 支付</span>
+      <span class="module-tag"><span class="tag-gap">高度异常</span></span>
+    </div>
+
+    <h3>近 30 天本店 vs 同行（生意参谋实测 · V11 主对照）</h3>
+    <table class="matrix">
+      <tr><th>指标</th><th>本店 30 天</th><th>同行 30 天</th><th>差距</th><th>状态</th></tr>
+      <tr><td>展现次数</td><td class="right"><strong>1,223,830</strong></td><td class="right">555,105</td><td class="right">+120%</td><td><span class="tag-good">优秀</span></td></tr>
+      <tr><td>访客数</td><td class="right">7,364</td><td class="right">7,684</td><td class="right">-4%</td><td><span class="tag-good">持平</span></td></tr>
+      <tr><td>浏览量</td><td class="right">22,113</td><td class="right">24,583</td><td class="right">-10%</td><td><span class="tag-mid">略低</span></td></tr>
+      <tr><td><strong>点击转化率</strong></td><td class="right"><strong>1.81%</strong></td><td class="right">4.43%</td><td class="right">-59%</td><td><span class="tag-gap">极低</span></td></tr>
+      <tr><td><strong>支付转化率</strong></td><td class="right"><strong>0.71%</strong></td><td class="right">5.82%</td><td class="right">-88%</td><td><span class="tag-gap">极低</span></td></tr>
+      <tr><td>支付买家数</td><td class="right">52</td><td class="right">447</td><td class="right">-88%</td><td><span class="tag-gap">极低</span></td></tr>
+      <tr><td>支付金额</td><td class="right">243,779</td><td class="right">262,906</td><td class="right">-7%</td><td><span class="tag-good">持平</span></td></tr>
+    </table>
+
+    <h3>近 7 天对比（验证近期爆发趋势）</h3>
+    <table class="matrix">
+      <tr><th>指标</th><th>本店 7 天</th><th>同行 7 天</th><th>差距</th><th>vs 月度</th></tr>
+      <tr><td>展现次数</td><td class="right">204,542</td><td class="right">118,225</td><td class="right">+73%</td><td>月度更优秀</td></tr>
+      <tr><td>访客数</td><td class="right">1,316</td><td class="right">1,897</td><td class="right">-31%</td><td>月度大幅追平</td></tr>
+      <tr><td>支付买家数</td><td class="right">14</td><td class="right">137</td><td class="right">-90%</td><td>月度略好</td></tr>
+      <tr><td><strong>支付金额</strong></td><td class="right"><strong>145,453</strong></td><td class="right">69,609</td><td class="right"><strong>+109%</strong></td><td><strong>周度反超 ↑↑</strong></td></tr>
+    </table>
+
+    <div class="callout good">
+      <h3>🚀 关键发现：{{店铺名}}最近 7 天周度爆发，反超同行 109%</h3>
+      <ul>
+        <li>近 7 天 GMV ¥145k ≈ 30 天 ¥244k 的 60% → <strong>意味着最近 7 天单周打了 30 天 1/2 的量</strong></li>
+        <li>线性放到 30 天 = ¥622k，远超同行 30 天 ¥263k</li>
+        <li>但 30 天平均仍持平同行，说明<strong>爆发尚未稳定</strong></li>
+        <li>5 月 W19/W20/W21 是关键观察期 · 验证 W18 爆发能否延续</li>
+      </ul>
+    </div>
+
+    <div class="callout">
+      <h3>底层逻辑：{{店铺名}} = "高客单 × 客户少" 模型</h3>
+      <ul>
+        <li><strong>30 天客单价 ¥4,688</strong>（{{店铺名}} ¥244k/52买家） vs 同行 ¥588（¥263k/447买家）= 同行的 8 倍</li>
+        <li><strong>7 天客单价 ¥10,389</strong>（{{店铺名}} ¥145k/14买家）vs 同行 ¥508 = 同行的 20 倍</li>
+        <li><strong>展现 1.22M 优秀 + 点击转化 1.81% 极低</strong> = 关键词与商品错位（V8 询盘北极星核心命题）</li>
+        <li><strong>这不是单纯的"差"</strong> — 反映{{店铺名}}服务企业大客户，不该按零售均值评判</li>
+      </ul>
+    </div>
+
+    <h3>排名定位</h3>
+    <ul>
+      <li>近 30 天支付金额排名：<strong>第 82 名</strong>（包装 - 塑料包装第二层级）</li>
+      <li>P4P 行业排名：<strong>109 名</strong>（行业 10% 以后）</li>
+      <li>昨日实时：访客 173 / 浏览 369 / 实时访客 77 / 实时浏览 131</li>
+    </ul>
+
+    <div class="kv-box next">
+      <h5>🎯 下一步动作</h5>
+      ① 把 V8 56 条新标题（关键词西医补缺）逐步上架，跟踪点击转化率变化<br>
+      ② 抓贝缇 + 瑞安姜氏 TOP20 引流词，{{店铺名}}未覆盖立刻嵌入<br>
+      ③ 跳失率/停留时长按二级类目独立看板（生意参谋"竞争"）<br>
+      ④ "全店包邮"试算（平台明确"+100% 转化加权"）
+    </div>
+  </div>
+</section>
+
+<!-- 模块 3 -->
+<section class="with-break">
+  <h2>模块 ③ 产品货品结构（实测）</h2>
+  <div class="module">
+    <div class="module-header">
+      <span class="module-no">03</span>
+      <span class="module-title">分层 · 优化 · 动销 · 现货定制</span>
+      <span class="module-tag"><span class="tag-mid">单品依赖</span></span>
+    </div>
+
+    <h3>P4P 热销爆品 TOP12 现状（30 天 GMV）</h3>
+    <table class="matrix">
+      <tr><th>#</th><th>商品（截短）</th><th class="right">月销</th><th class="right">30日 GMV</th><th>状态</th></tr>
+      <tr><td>01</td><td>亚克力塑料双层胶囊瓶 食品级带内胆避光粉末瓶子</td><td class="right">45</td><td class="right"><strong>¥203,636</strong></td><td><span class="tag-good">主力</span></td></tr>
+      <tr><td>02</td><td>6*8食品密封罐石斛藏红花瓶子</td><td class="right">0</td><td class="right">0</td><td><span class="tag-gap">僵尸</span></td></tr>
+      <tr><td>03</td><td>亚克力瓶 30ml 银耳保健品瓶</td><td class="right">16</td><td class="right">¥6,208</td><td><span class="tag-mid">小爆</span></td></tr>
+      <tr><td>04</td><td>大号亚克力瓶藏红花黑枸杞</td><td class="right">3</td><td class="right">¥1,072</td><td><span class="tag-mid">小爆</span></td></tr>
+      <tr><td>05-12</td><td>（其余 8 款上榜商品）</td><td class="right">0</td><td class="right">0</td><td><span class="tag-gap">僵尸 ×8</span></td></tr>
+    </table>
+
+    <div class="callout danger">
+      <h3>⚠️ 极度依赖单品：第 1 名占全店 GMV 60%+</h3>
+      <ul>
+        <li>第 1 名亚克力胶囊瓶 30 天 GMV ¥203,636</li>
+        <li>同期全店总 GMV ≈ ¥336,453（W7-W17 周报口径）</li>
+        <li>占比 ≈ <strong>60%+</strong></li>
+        <li>风险：第 1 名一旦被同行截胡或被平台降权，全店收入悬崖跌</li>
+      </ul>
+      <p><strong>对策</strong>：需立即识别 02-12 的"僵尸爆品"是优化还是下架——上榜但 0 销持续稀释主品流量。</p>
+    </div>
+
+    <h3>商品结构其它发现</h3>
+    <ul>
+      <li>店铺前台 offerlist 总商品 <strong>235 件</strong>（V8 决策表口径 176 SKU 已盘点 75%）</li>
+      <li>分类"未分类" <strong>140 件</strong> — 一半商品没归类，动销和搜索权重双失</li>
+      <li>商品体验 5.0 满分（品质退款率 0% / 问题率 0%）—— V8 标题改造 + 主图优化效果到位</li>
+    </ul>
+
+    <h3>本店产品标签盘点（V11 新增 · 实测合成）</h3>
+    <table class="matrix">
+      <tr><th>标签维度</th><th>{{店铺名}}数值</th><th>诊断</th></tr>
+      <tr><td>在线商品总数（生意参谋）</td><td class="right">228</td><td>含选商品基数</td></tr>
+      <tr><td>近 7 天有访问商品数</td><td class="right">79（35%）</td><td>2/3 商品 0 曝光</td></tr>
+      <tr><td><strong>近 7 天动销商品数</strong></td><td class="right"><strong>1（0.44%）</strong></td><td><span class="tag-gap">⚠️ 极度依赖单品</span></td></tr>
+      <tr><td>生意通待加权</td><td class="right">0</td><td>—</td></tr>
+      <tr><td>生意通加权中</td><td class="right">2</td><td>—</td></tr>
+      <tr><td><strong>生意通高级加权</strong></td><td class="right"><strong>103</strong></td><td><span class="tag-good">最大资产 · 待激活</span></td></tr>
+      <tr><td>定制商品数（金牌钻级口径）</td><td class="right">≥ 10</td><td>已达成 ≥ 10 阈值</td></tr>
+      <tr><td>主推"立即定制"按钮商品</td><td class="right">4</td><td>工厂档案页主推</td></tr>
+      <tr><td>小黄标 / 代工品牌 / 供货客户</td><td class="right">≥ 1</td><td>金牌钻级已达成</td></tr>
+      <tr><td>P4P 投放中计划</td><td class="right">2</td><td>偏少</td></tr>
+      <tr><td>P4P 优质计划</td><td class="right"><strong>0</strong></td><td><span class="tag-gap">⚠️ 一个都没有</span></td></tr>
+      <tr><td>P4P 机会商品（未推广）</td><td class="right">105</td><td>巨大优化空间</td></tr>
+      <tr><td>未分类商品</td><td class="right">140</td><td>分类管理缺口</td></tr>
+    </table>
+
+    <div class="callout">
+      <h3>金牌制造钻级（V11 新增 · 6 项全部达成）✅</h3>
+      <ul>
+        <li>✅ 至少 1 个小黄标 / 代工品牌 / 供货客户</li>
+        <li>✅ 老板带看视频（3 分以上）</li>
+        <li>✅ 入驻厂长在线（陈捷厂长直接对外）</li>
+        <li>✅ 近 30 天定制服务响应率 ≥ 70%</li>
+        <li>✅ 完善工厂介绍</li>
+        <li>✅ 定制商品数 ≥ 10 个</li>
+      </ul>
+      <p><strong>战略价值</strong>：金牌制造钻级 6 项全达成，下一钻级"金牌制造"权益已开锁，建议立即申请——享工厂商家专属资源（流量倾斜 + 大客户匹配）。</p>
+    </div>
+
+    <div class="callout danger">
+      <h3>⚠️ 资产 vs 激活的"剪刀差"</h3>
+      <p><strong>228 在线商品 + 103 高级加权商品（搜索首页 2-4 位扶持）+ 105 P4P 机会商品 + 1 个动销商品 + 0 个 P4P 优质计划</strong></p>
+      <p>这是一组令人警觉的对比 —— {{店铺名}}<strong>持有的平台资产巨大，激活率却极低</strong>。103 个高级加权商品本应是{{店铺名}}的"暗仓库"，但当前只激活了 1 个动销。这是 V11 模块 3 最大的优化机会窗口。</p>
+    </div>
+
+    <h3 style="margin-top:5mm">同行对比缺口说明</h3>
+    <p style="font-size:9.5pt">严选 / 含选 / 旺旺定制商品的<strong>同行平均数</strong>需 SKA PM 万闲提供内部 BD 数据，公开后台无法直接抓取（部分页面验证码拦截 + 部分 iframe 跨域）。但{{店铺名}}自身资产盘点 + 与"行业头部"的相对关系已能定位最大缺口：高级加权资产巨大但激活率极低。</p>
+
+    <div class="kv-box next">
+      <h5>🎯 下一步动作</h5>
+      ① <strong>砍 9 个僵尸爆品</strong>（02/05-12）·要么针对性优化要么从榜单移除<br>
+      ② 140 个未分类商品归类 · 按 V5 三大类目（塑料/纸盒/综合定制）落位<br>
+      ③ 第 1 名做"防截胡"专项·标题/主图/详情页查 SOS 风险点<br>
+      ④ 现货 vs 定制流程在详情页加对比块（详见模块 8）
+    </div>
+  </div>
+</section>
+
+<!-- 模块 4 -->
+<section class="with-break">
+  <h2>模块 ④ 转化 &amp; 询盘核心（实测）</h2>
+  <div class="module">
+    <div class="module-header">
+      <span class="module-no">04</span>
+      <span class="module-title">点击 → 询盘 → 下单 → 复购</span>
+      <span class="module-tag"><span class="tag-mid">企业型客户</span></span>
+    </div>
+
+    <h3>询盘漏斗（年框累计 + 月度）</h3>
+    <table class="matrix">
+      <tr><th>层级</th><th>指标</th><th>当前值</th><th>诊断</th></tr>
+      <tr><td>顶部</td><td>全店询盘量（年框累计）</td><td class="right"><strong>599 条</strong></td><td>—</td></tr>
+      <tr><td>结构</td><td>B 买询盘占比</td><td class="right"><strong>64%</strong></td><td><span class="tag-good">企业买家为主 · 健康</span></td></tr>
+      <tr><td>新客</td><td>全店新访客（年框）</td><td class="right">6,229</td><td>—</td></tr>
+      <tr><td>转化</td><td>全店新买家（年框）</td><td class="right">26</td><td>新客转化 0.42%</td></tr>
+      <tr><td>客单</td><td>支付金额 / 买家数（7天）</td><td class="right">¥10,389</td><td><span class="tag-good">高客单</span></td></tr>
+      <tr><td>口碑</td><td>店铺回头率</td><td class="right"><strong>46.1%</strong></td><td><span class="tag-good">+7.1pp vs V8 旧值</span></td></tr>
+      <tr><td>响应</td><td>3 分钟响应率（新灯塔）</td><td class="right">95.61%</td><td>4.0 中</td></tr>
+      <tr><td>响应</td><td>旺旺咨询满意度</td><td class="right">86.67%</td><td>3.0 中</td></tr>
+    </table>
+
+    <div class="callout">
+      <h3>关键洞察 · V8 询盘北极星已被数据验证</h3>
+      <p>V8 提出"不追支付/GMV，追询盘量与询盘转化率"——本次实测证明这条路对：</p>
+      <ul>
+        <li>{{店铺名}}是 <em>客单 ¥10k 的 B 端模型</em>，零售类支付转化率指标本就不该套用</li>
+        <li>B 买询盘占比 64% 表明客户结构正在向高价值买家集中</li>
+        <li>但 599 询盘 / 26 新买家 = <strong>询盘 → 新客转化 4.3%</strong>，仍有提升空间</li>
+      </ul>
+    </div>
+
+    <div class="kv-row">
+      <div class="kv-box gap">
+        <h5>⚠️ 短板</h5>
+        旺旺咨询满意度 <strong>86.67% · 仅 3.0 分</strong><br>
+        距优秀线 100% 有 13.33pp 缺口<br>
+        定制咨询涉及图纸/打样/报价，复杂咨询易拉低满意度
+      </div>
+      <div class="kv-box scan">
+        <h5>✅ 亮点</h5>
+        3 分钟响应率 <strong>95.61%</strong>（同行均值 76.8%）<br>
+        平台介入率 <strong>0%</strong>（同行 2.5%）<br>
+        品质退款率 <strong>0%</strong>
+      </div>
+    </div>
+
+    <div class="kv-box next">
+      <h5>🎯 下一步动作</h5>
+      ① 旺旺自动回复脚本三段式：打样 / 起订量 / 工艺定制<br>
+      ② 客户分层：把 599 询盘按客单切 ABC 三类，TOP20 重点维护<br>
+      ③ 新客 26 → 50 拉新计划（5 月目标）<br>
+      ④ 满意度低分客户回访工作流，识别复杂咨询模板化
+    </div>
+  </div>
+</section>
+
+<!-- 模块 5 -->
+<section class="with-break">
+  <h2>模块 ⑤ BSR 新灯塔分（实测 · 命门）</h2>
+  <div class="module">
+    <div class="module-header">
+      <span class="module-no">05</span>
+      <span class="module-title">商品 · 物流 · 售后 · 咨询 四大体验</span>
+      <span class="module-tag"><span class="tag-gap">流量分配权</span></span>
+    </div>
+
+    <h3>综合分：4.0 / 5.0（落后 48% 同行）</h3>
+    <div class="score-bar">
+      <div class="seg s-good" style="width: 80%">4.0</div>
+      <div class="seg s-low" style="width: 20%">距 4.5 金冠 0.5</div>
+    </div>
+
+    <h3>4 大维度 × 9 子项 完整数据</h3>
+    <table class="matrix">
+      <tr><th>维度</th><th>权重</th><th>分</th><th>评级</th><th>子项</th><th>当前</th><th>子分</th><th>同行均值</th></tr>
+      <tr><td rowspan="2"><strong>商品</strong></td><td rowspan="2">15%</td><td rowspan="2"><span class="tag-good">5.0</span></td><td rowspan="2">优</td><td>品质退款率</td><td class="right">0.00%</td><td class="center">5.0</td><td class="right">0.3%</td></tr>
+      <tr><td>品质问题率</td><td class="right">0.00%</td><td class="center">5.0</td><td class="right">0.3%</td></tr>
+      <tr><td rowspan="3"><strong>物流</strong></td><td rowspan="3">35%</td><td rowspan="3"><span class="tag-mid">3.7</span></td><td rowspan="3">中</td><td><strong>履约率</strong></td><td class="right"><strong>88.07%</strong></td><td class="center"><strong>3.0</strong></td><td class="right">98.9%</td></tr>
+      <tr><td>时效达成率</td><td class="right">97.73%</td><td class="center">4.0</td><td class="right">96.6%</td></tr>
+      <tr><td>物流退款率</td><td class="right">0.00%</td><td class="center">5.0</td><td class="right">0.6%</td></tr>
+      <tr><td rowspan="2"><strong>售后</strong></td><td rowspan="2">30%</td><td rowspan="2"><span class="tag-gap">3.7</span></td><td rowspan="2">差</td><td><strong>退款处理时长</strong></td><td class="right"><strong>21.25h</strong></td><td class="center"><strong>3.0</strong></td><td class="right">41.2h</td></tr>
+      <tr><td>平台介入率</td><td class="right">0.00%</td><td class="center">5.0</td><td class="right">2.5%</td></tr>
+      <tr><td rowspan="2"><strong>咨询</strong></td><td rowspan="2">20%</td><td rowspan="2"><span class="tag-mid">3.5</span></td><td rowspan="2">中</td><td>3 分钟响应率</td><td class="right">95.61%</td><td class="center">4.0</td><td class="right">76.8%</td></tr>
+      <tr><td><strong>旺旺满意度</strong></td><td class="right"><strong>86.67%</strong></td><td class="center"><strong>3.0</strong></td><td class="right">83.3%</td></tr>
+      <tr><td>加分项</td><td>—</td><td colspan="2">+0.2</td><td>特色保障</td><td>—</td><td>—</td><td>—</td></tr>
+    </table>
+
+    <div class="callout danger">
+      <h3>🎯 4 个 3.0 分子项 = 综合分被压制的根因</h3>
+      <ol>
+        <li><strong>履约率 88.07%</strong>（vs 同行 98.9%）· 物流权重 35% × 1/3 子项</li>
+        <li><strong>退款处理时长 21.25h</strong>（vs 优秀 0.2h）· 售后权重 30% × 1/2 子项</li>
+        <li><strong>旺旺满意度 86.67%</strong>（vs 优秀 100%）· 咨询权重 20% × 1/2 子项</li>
+      </ol>
+      <p style="font-size:9.5pt"><strong>提分公式</strong>：3 项各 +1 分 ≈ 综合 +0.37 → 4.37 / 各 +1.5 → 4.55（冲 4.5 金冠）</p>
+    </div>
+
+    <h3>权益梯度 · {{店铺名}}当前位置</h3>
+    <table class="matrix">
+      <tr><th>星级</th><th>权益</th><th>{{店铺名}}状态</th></tr>
+      <tr><td>≥ 4 星</td><td>跨境专供 / 大促赛马 / 流量加权激励</td><td><span class="tag-good">✅ 已解锁</span></td></tr>
+      <tr><td>≥ 4.5 星</td><td>金冠商品积分 / 商品成长核心指标</td><td><span class="tag-gap">❌ 差 0.5 分</span></td></tr>
+    </table>
+
+  </div>
+</section>
+
+<!-- 模块 6 -->
+<section class="with-break">
+  <h2>模块 ⑥ 竞品 &amp; 市场对标（实测）</h2>
+  <div class="module">
+    <div class="module-header">
+      <span class="module-no">06</span>
+      <span class="module-title">头部 / 同温州 / 二线 14 家工厂全扫</span>
+      <span class="module-tag"><span class="tag-mid">知敌</span></span>
+    </div>
+
+    <h3>本地对手矩阵（V11 收口 · 严格本地，剔除外地）</h3>
+    <p style="font-size:9.5pt;color:#666">用户指令：头部商家全部对比本地的，不要外地的。<br>
+    本表共 4 家（温州 3 + 浙江省内 1），已剔除广州 5、东莞 1、深圳 1、沧州 1、其他 2 共 10 家外地工厂。</p>
+
+    <h3>① 温州本地（核心圈 · 3 家）</h3>
+    <table class="matrix">
+      <tr><th>#</th><th>工厂</th><th>地区</th><th>履约率</th><th>响应率</th><th>回头率</th><th>规模</th><th>vs {{店铺名}}</th></tr>
+      <tr style="background:#fff3e6"><td>—</td><td><strong>{{店铺名}}（本店）</strong></td><td>{{店铺城市}}</td><td class="right"><strong>100%</strong></td><td class="right">86%</td><td class="right">46%</td><td>12,812 m² / 203 人</td><td>基线</td></tr>
+      <tr><td>1</td><td><strong>瑞安姜氏工艺礼品厂</strong></td><td>温州瑞安</td><td class="right">100%</td><td class="right"><strong>99%</strong></td><td class="right"><strong>61%</strong></td><td>11,000 m² / 58 人</td><td><span class="tag-gap">⚠️ 头号对手 · 三项都强</span></td></tr>
+      <tr><td>2</td><td>温州除云工艺品</td><td>温州市</td><td class="right">100%</td><td class="right">24%</td><td class="right">38%</td><td>—</td><td>履约同等，响应+回头都弱</td></tr>
+      <tr><td>3</td><td>温州翔佰包装</td><td>温州市</td><td class="right">—</td><td class="right">80%</td><td class="right">29%</td><td>—</td><td>回头率显著弱于{{店铺名}}</td></tr>
+    </table>
+
+    <h3>② 浙江省内（次圈 · 1 家）</h3>
+    <table class="matrix">
+      <tr><th>#</th><th>工厂</th><th>地区</th><th>履约率</th><th>响应率</th><th>回头率</th><th>规模</th><th>vs {{店铺名}}</th></tr>
+      <tr><td>4</td><td>台州黄岩金霆塑模</td><td>台州黄岩</td><td class="right">100%</td><td class="right">70%</td><td class="right">—</td><td>9,600 m² / 91 人</td><td>履约同等，响应略弱于{{店铺名}}</td></tr>
+    </table>
+
+    <h3>已剔除的外地工厂（10 家）</h3>
+    <p style="font-size:9.5pt;color:#888">
+      广州（5）：旭众塑业 / 汇瑞包装 / 朗凯科技 / 智塑塑料 / 冠鼎塑料 ·
+      东莞（1）：和顺塑胶 ·
+      深圳（1）：腾旭药用包装 ·
+      沧州（1）：蓝康塑料 ·
+      其他（2）：进宇塑业广州 / 优朔湛江
+    </p>
+
+    <div class="callout danger">
+      <h3>🎯 头号对手聚焦：瑞安姜氏工艺礼品厂（同温州 + 三项都强）</h3>
+      <ul>
+        <li><strong>地理 100% 重叠</strong>：温州瑞安 vs {{所在区县}}，相邻县市</li>
+        <li><strong>类目高度重叠</strong>：塑料瓶/壶 + 保健品礼品包装 + 塑料罐</li>
+        <li>履约率持平 100%（前台口径）</li>
+        <li>响应率 99% vs {{店铺名}} 86% — <strong>领先 13pp</strong>，对应{{店铺名}}新灯塔咨询体验 3.5 分的弱项</li>
+        <li>回头率 61% vs {{店铺名}} 46% — <strong>领先 15pp</strong></li>
+        <li>规模：1.1 万 m² / 58 人 · <strong>比{{店铺名}}小但效率更高</strong>（{{店铺名}} 12,812 m² / 203 人）</li>
+      </ul>
+      <p><strong>对策（V11 升级）</strong>：</p>
+      <ol>
+        <li>把姜氏列入{{店铺名}}主对标（与贝缇并列）</li>
+        <li>月度抓姜氏 TOP20 流量词 + 详情页结构 + 旺旺响应模板</li>
+        <li>聚焦突破点：响应率从 86% → 95%（学姜氏 99% 的话术结构）</li>
+        <li>回头率从 46% → 55%（学姜氏 61% 的老客维系）</li>
+      </ol>
+    </div>
+
+    <div class="callout good">
+      <h3>本地战场护城河：{{店铺名}}对其他 3 家温州+浙江工厂全面领先</h3>
+      <ul>
+        <li>温州除云：响应率 24% vs {{店铺名}} 86% / 回头率 38% vs 46% — 整体显著弱于{{店铺名}}</li>
+        <li>温州翔佰：回头率 29% vs 46% — 客户粘性差距大</li>
+        <li>台州金霆：响应 70% vs 86% / 履约同等 — {{店铺名}}咨询能力更强</li>
+        <li>结论：<strong>除瑞安姜氏外，{{店铺名}}在温州+浙江本地无强敌</strong>，姜氏是唯一战略威胁</li>
+      </ul>
+    </div>
+
+    <div class="kv-box next">
+      <h5>🎯 下一步动作</h5>
+      ① 抓姜氏 + 贝缇 TOP20 流量词 · {{店铺名}}未覆盖立刻嵌入<br>
+      ② 选 2 家二线对标（销量 100-500 + 增长率 &gt; 20%）<br>
+      ③ 类目热搜词月度榜单存档（02-数据快照/）<br>
+      ④ 旺季倒推：5-15 起铺中秋词，9-20 起铺双 11
+    </div>
+  </div>
+</section>
+
+<!-- 模块 7 -->
+<section class="with-break">
+  <h2>模块 ⑦ 运营 &amp; 推广复盘（实测）</h2>
+  <div class="module">
+    <div class="module-header">
+      <span class="module-no">07</span>
+      <span class="module-title">P4P · SKA 年框 · 活动报名</span>
+      <span class="module-tag"><span class="tag-mid">算账</span></span>
+    </div>
+
+    <h3>P4P 账户健康（{{营销主体}}）</h3>
+    <table class="matrix">
+      <tr><th>指标</th><th>当前值</th><th>状态</th></tr>
+      <tr><td>营销分</td><td class="right">89.0</td><td><span class="tag-mid">中等偏上</span></td></tr>
+      <tr><td>投放中计划</td><td class="right">2</td><td><span class="tag-mid">偏少</span></td></tr>
+      <tr><td><strong>优质计划</strong></td><td class="right"><strong>0</strong></td><td><span class="tag-gap">⚠️ 一个都没有</span></td></tr>
+      <tr><td><strong>机会商品（未推广）</strong></td><td class="right"><strong>105</strong></td><td><span class="tag-gap">⚠️ 巨大优化空间</span></td></tr>
+      <tr><td>审核异常</td><td class="right">0</td><td><span class="tag-good">✅</span></td></tr>
+      <tr><td>昨日消耗</td><td class="right">¥2,377.42</td><td>—</td></tr>
+    </table>
+
+    <h3>SKA 年框消耗节奏</h3>
+    <table class="matrix">
+      <tr><th>维度</th><th>数值</th></tr>
+      <tr><td>年框总额</td><td class="right">¥100 万 / 年</td></tr>
+      <tr><td>截止 4-26 累消</td><td class="right"><strong>¥7.6 万</strong></td></tr>
+      <tr><td>已用天数</td><td class="right">26 天（年框 3-31 起）</td></tr>
+      <tr><td>月化推算</td><td class="right">¥8.7 万 / 月</td></tr>
+      <tr><td>计划月配</td><td class="right">¥8.3 万 / 月</td></tr>
+      <tr><td><strong>节奏偏差</strong></td><td class="right"><strong>+4.5%（轻微超出，可控）</strong></td></tr>
+    </table>
+
+    <h3>SKA 待解锁权益</h3>
+    <table class="matrix">
+      <tr><th>权益</th><th>解锁条件</th><th>{{店铺名}}状态</th></tr>
+      <tr><td>B 类（优质 B 买家专享）</td><td>30 万预算配置</td><td><span class="tag-mid">待解锁</span></td></tr>
+      <tr><td>竞（同行竞对人群独享）</td><td>35 万预算配置</td><td><span class="tag-mid">待解锁</span></td></tr>
+      <tr><td>超（超级大买家独享）</td><td>40 万预算配置</td><td><span class="tag-mid">待解锁</span></td></tr>
+    </table>
+
+    <div class="callout danger">
+      <h3>⚠️ SKA 权益收回触发条件</h3>
+      <p><strong>"昨日预算低于 550 元，权益收回"</strong> — 昨日已花 ¥2,377，安全。但要注意：节假日/系统暂停时若日消耗 &lt; 550 会丢权益。</p>
+    </div>
+
+    <h3>活动报名状态</h3>
+    <ul>
+      <li><strong>AI 活动营销已加入</strong>：3-24 至 12-31 期间系统自动报名（SKA 专享）</li>
+      <li>近期 4 月活动：4-27 / 4-28 / 4-30 三场（具体名称需进"我的活动"确认）</li>
+    </ul>
+
+    <div class="kv-box next">
+      <h5>🎯 下一步动作（5 月）</h5>
+      ① <strong>"优质计划"立项</strong>：从 2 个投放计划升级出 1 个 ROI 达标的优质计划<br>
+      ② <strong>105 个机会商品</strong>分批接入：每周 10 个，6 周覆盖完<br>
+      ③ <strong>预算配置评估</strong>：是否提到 30 万解锁 B 类买家权益（拉新成本测算）<br>
+      ④ 关键词审计：消耗 &gt; ¥500 但询盘 = 0 立刻下线
+    </div>
+  </div>
+</section>
+
+<!-- 模块 8 -->
+<section class="with-break">
+  <h2>模块 ⑧ 定制类目专项（命门 · 实测）</h2>
+  <div class="module">
+    <div class="module-header">
+      <span class="module-no">08</span>
+      <span class="module-title">定制能力 · 咨询承接 · 包装材质</span>
+      <span class="module-tag"><span class="tag-gap">命门 / 壁垒</span></span>
+    </div>
+
+    <div class="callout danger">
+      <h3>🎯 实测命门 #1：加工专区 tab 是空的</h3>
+      <p>店铺前台导航有【加工专区】tab，但点击后只显示"加工定制"标题，<strong>没有定制流程图 / 能力矩阵 / 案例展示</strong>。<br>
+      1688 平台给商家专门留的"定制能力展示位"，{{店铺名}}开了门但没装修。这是 V10 模块 8 第一刀必砍的洞。</p>
+    </div>
+
+    <h3>当前定制能力的真实展示（前台 + 工厂档案）</h3>
+    <table class="matrix">
+      <tr><th>层级</th><th>找得到的内容</th><th>缺口</th></tr>
+      <tr><td>主推 4 商品（"立即定制"按钮）</td>
+          <td>定制双层亚克力胶囊瓶 ¥1.1/50件起<br>书型定制天地盖海参彩盒 ¥15/100件起<br>定制瓦楞翻盖书型盒 ¥20/100件起<br>高档透明燕窝食品塑料盒 ¥13/1件起</td>
+          <td>无统一定制流程页 · 4 个商品散落</td></tr>
+      <tr><td>服务承诺</td><td>"印错包赔 + 延期必赔"（行业少见双赔）</td><td>未在详情页主视觉强化</td></tr>
+      <tr><td>工艺能力</td><td>覆膜/注塑/烫金/UV/压痕/对裱/开槽/吹膜/模切/彩印/柔印/移印/上光/热转印/水转印/数码印刷</td><td>没有可视化工艺能力矩阵图</td></tr>
+      <tr><td>起订量</td><td>工厂档案：1000 个；主推商品：50/100/1 件不等</td><td><span class="tag-gap">⚠️ 矛盾 · 待澄清分级</span></td></tr>
+      <tr><td>外贸</td><td>不接外贸订单</td><td>详情页明确标注</td></tr>
+      <tr><td>定制案例</td><td>展厅有 6 个案例图（三角瓶/弧形金边锁扣盒/百瑞源/国坤堂/夫人燕窝/卓芝林）</td><td>仅 6 个 · 未脱敏 · 未结构化</td></tr>
+    </table>
+
+    <h3>V8/V9 没用到的关键卖点（实测发现）</h3>
+    <ol>
+      <li><strong>"印错包赔 + 延期必赔"双承诺</strong> — 行业少见，应放详情页主视觉</li>
+      <li><strong>"2026 上榜一钻工厂 + 入围塑料盒实力榜第 5 名"</strong> — 平台官方权威背书</li>
+      <li><strong>"税务评级 A + 14 个专利 + 4 个商标"</strong> — 企业大客户最看重的合规背书</li>
+      <li><strong>"VR 厂长带看 + SGS 认证（NGBWT00612317）"</strong> — 品质信任锚</li>
+      <li><strong>"陈捷厂长直接对外"</strong> — 不是销售客服，是厂长直接谈，对企业客户有信任溢价</li>
+    </ol>
+
+    <h3>"高客单 + 客户少"模型 = 命门即壁垒</h3>
+    <ul>
+      <li>{{店铺名}}客单 ¥10,389（同行 ¥508 的 20 倍）</li>
+      <li>意向客户 207 / B 买询盘占 64% / 大客户场景</li>
+      <li>结论：{{店铺名}}<strong>不是大众零售商，是定制大客户型工厂</strong></li>
+      <li>这种模型下，定制咨询承接漏斗的每一步（图纸/报价/打样/交期）都是命门</li>
+    </ul>
+
+    <div class="kv-box next">
+      <h5>🎯 下一步动作（命门级最高优先级 · 5 月第 1 周完成）</h5>
+      ① <strong>加工专区 tab 装修</strong>：填充工艺能力矩阵图 + 6 个真实案例 + 定制 SOP<br>
+      ② <strong>详情页统一"定制能力区块"</strong>：印错包赔 + 延期必赔 + 4 大背书图标化<br>
+      ③ <strong>定义图纸对接 SOP</strong>：30 分钟首响 / 24 小时报价 / 48 小时打样<br>
+      ④ <strong>报价模板 8 项必填字段</strong>：材质/工艺/数量/起订量/单价/模具费/交期/付款方式<br>
+      ⑤ <strong>起订量分级表</strong>挂详情页 + 旺旺快捷回复（澄清单品 vs 套装口径矛盾）<br>
+      ⑥ 材质参数表（PET/PP/卡纸克重 + 食品级认证编号）公开
+    </div>
+  </div>
+</section>
+
+<!-- V12 新增 · 附 C TOP3 同行进店产品优势对比 -->
+<section class="with-break">
+  <h2>附 C · TOP3 同行进店产品优势对比（V12 新增专章）</h2>
+
+  <div class="callout good">
+    <h3>🚀 {{店铺名}}当前行业位置（重磅）</h3>
+    <ul>
+      <li><strong>行业排名：第 1,020 名</strong></li>
+      <li><strong>近 30 天升幅：升 3,052 名</strong> ⭐⭐⭐ 上升势头强劲</li>
+      <li>30 天交易指数：116,733 / 流量指数 90,889 / 上新商品 4 个</li>
+    </ul>
+    <p><strong>底层逻辑</strong>：{{店铺名}}最近 30 天行业排名飙升 3052 名，与近 7 天 GMV 反超同行 109% 的爆发数据互相印证——{{店铺名}}已经进入<em>上升通道</em>，但需要把"流失对手"先盘清楚才能稳住增速。</p>
+  </div>
+
+  <h3>① 流失竞店 TOP10（平台算法识别{{店铺名}}客户跳槽去向）</h3>
+  <table class="matrix">
+    <tr><th>#</th><th>店铺</th><th>地区</th><th>流失指数</th><th>30天交易</th><th>30天流量</th><th>买家指数</th></tr>
+    <tr style="background:#fdecea"><td>1</td><td><strong>广州市盈塑塑料制品</strong></td><td>广州</td><td class="right"><strong>5,570</strong></td><td class="right">4,688</td><td class="right">4,835</td><td class="right">743,611</td></tr>
+    <tr style="background:#fdecea"><td>2</td><td><strong>昆明首奎包装材料</strong></td><td>昆明</td><td class="right"><strong>4,566</strong></td><td class="right">8,829</td><td class="right">4,476</td><td class="right">757,247</td></tr>
+    <tr style="background:#fdecea"><td>3</td><td><strong>广东文塑实业</strong></td><td>广东</td><td class="right"><strong>2,722</strong></td><td class="right">61,007</td><td class="right">80,305</td><td class="right">912,182</td></tr>
+    <tr style="background:#fff3e6"><td>4</td><td>温州同亨包装</td><td><strong>温州本地</strong></td><td class="right">2,509</td><td class="right">1,052</td><td class="right">6,119</td><td class="right">655,318</td></tr>
+    <tr style="background:#fff3e6"><td>5</td><td>平阳时拓包装</td><td><strong>平阳本地</strong></td><td class="right">2,370</td><td class="right">10,890</td><td class="right">20,406</td><td class="right">747,537</td></tr>
+    <tr style="background:#fff3e6"><td>6</td><td>温州裕飞包装</td><td><strong>温州本地</strong></td><td class="right">2,332</td><td class="right">5,963</td><td class="right">20,504</td><td class="right">681,883</td></tr>
+    <tr><td>7</td><td>普宁流沙欧素</td><td>普宁</td><td class="right">2,332</td><td class="right">4,706</td><td class="right">7,058</td><td class="right">828,029</td></tr>
+    <tr><td>8</td><td>瑞安姜氏工艺礼品厂</td><td>瑞安本地</td><td class="right">2,325</td><td class="right">12,592</td><td class="right">16,447</td><td class="right">713,704</td></tr>
+    <tr><td>9</td><td>昆明通格塑业</td><td>昆明</td><td class="right">2,324</td><td class="right">33,896</td><td class="right">10,626</td><td class="right">723,671</td></tr>
+    <tr><td>10</td><td>普宁流沙南泰</td><td>普宁</td><td class="right">2,316</td><td class="right">11,174</td><td class="right">25,011</td><td class="right">841,644</td></tr>
+  </table>
+
+  <h3>② TOP3 全国同行画像（按流失指数排）</h3>
+  <table class="matrix">
+    <tr><th>对手</th><th>核心画像</th><th>30天关键数据</th><th>抢人手段</th></tr>
+    <tr>
+      <td><strong>TOP1 广州盈塑</strong></td>
+      <td>流失指数 5,570 · 最强进店替代</td>
+      <td>交易 4,688 / 流量 4,835 / 搜索 216,756</td>
+      <td><strong>用"鱼油 / NMN / 蛋白粉"等西医补缺词抢人</strong></td>
+    </tr>
+    <tr>
+      <td><strong>TOP2 昆明首奎</strong></td>
+      <td>交易转化能力强 · 交易/流量比 1.97</td>
+      <td>交易 8,829 / 流量 4,476 / 搜索 249,967</td>
+      <td>云南远但承接{{店铺名}}流失客户能力强</td>
+    </tr>
+    <tr>
+      <td><strong>TOP3 广东文塑</strong></td>
+      <td>体量最大的真·头部</td>
+      <td>交易 61,007 ⭐⭐ / 流量 80,305 ⭐⭐ / 搜索 417,652</td>
+      <td>{{店铺名}} 30 天交易 116k 仅是文塑 1.91 倍</td>
+    </tr>
+  </table>
+
+  <div class="callout danger">
+    <h3>🎯 TOP1 流失商品验证 V8 战略</h3>
+    <p>广州盈塑承接{{店铺名}}流失客户的 TOP1 商品是：</p>
+    <p style="background:#fff;padding:3mm;border-left:3px solid #c9482b;font-size:11pt"><strong>"白色 750ml 大容量 PE 分装瓶 深色避光保健品鱼油胶囊蛋白粉塑料瓶"</strong>（买家指数 90,080 / 流失指数 328）</p>
+    <p>关键词"<em>鱼油 / 胶囊 / 蛋白粉</em>"恰好是 V8 已识别但{{店铺名}}<strong>未覆盖</strong>的西医补缺词缺口。这次实测证明：<strong>V8 西医补缺词战略不是理论推导，而是{{店铺名}}每天正在流失客户的现实命门</strong>。</p>
+  </div>
+
+  <h3>③ TOP3 本地同行画像（用户指令优先）</h3>
+  <table class="matrix">
+    <tr><th>本地对手</th><th>地区</th><th>30天交易</th><th>30天流量</th><th>画像</th></tr>
+    <tr>
+      <td><strong>本地 TOP1 温州同亨</strong></td>
+      <td>温州市</td>
+      <td class="right">1,052（弱）</td>
+      <td class="right">6,119</td>
+      <td>流量中等但交易转化弱（0.17）· 疑似低价吸客</td>
+    </tr>
+    <tr style="background:#fdecea">
+      <td><strong>本地 TOP2 平阳时拓 ⚠️</strong></td>
+      <td>平阳</td>
+      <td class="right">10,890 ⭐</td>
+      <td class="right">20,406 ⭐</td>
+      <td><strong>最强本地对手 · 流量+交易双高 · 同温州地区 100% 重叠</strong></td>
+    </tr>
+    <tr>
+      <td><strong>本地 TOP3 温州裕飞</strong></td>
+      <td>温州市</td>
+      <td class="right">5,963</td>
+      <td class="right">20,504 ⭐</td>
+      <td>流量仅次于平阳时拓 · 交易转化中等（0.29）</td>
+    </tr>
+  </table>
+
+  <div class="callout danger">
+    <h3>🎯 本地真·头号威胁修正：从瑞安姜氏改为平阳时拓</h3>
+    <p>V11 把瑞安姜氏列为本地头号对手（基于工厂档案三项 BSR）。<strong>V12 实测数据显示</strong>：</p>
+    <ul>
+      <li><strong>姜氏流失指数 2,325 排第 8 名</strong>（不是头号）</li>
+      <li><strong>平阳时拓流失指数 2,370 排本地第 2</strong>（且 30 天流量 20k / 交易 10k 双高）</li>
+      <li><strong>温州同亨流失指数 2,509 排本地第 1</strong>（但交易能力弱）</li>
+    </ul>
+    <p><strong>结论</strong>：{{店铺名}}应该重新校准本地敌情</p>
+    <ol>
+      <li><strong>真·流失头号</strong>：温州同亨（流失指数 2,509）— 但自身弱，疑似用低价吸客</li>
+      <li><strong>真·战略威胁</strong>：平阳时拓（流量+交易+流失三高）— 周度紧盯</li>
+      <li><strong>BSR 高分对标</strong>：瑞安姜氏（响应/回头率高）— 学习对标</li>
+    </ol>
+  </div>
+
+  <h3>④ 同款竞品 TOP10 + 搜索增长趋势（{{店铺名}}自身 SKU 视角）</h3>
+  <table class="matrix">
+    <tr><th>#</th><th>商品</th><th class="right">买家指数</th><th class="right">交易指数</th><th class="right">搜索增长</th></tr>
+    <tr><td>1</td><td>亚克力塑料双层胶囊瓶（{{店铺名}}主力 SKU01）</td><td class="right">153,567</td><td class="right">11,108</td><td class="right">-11.45%</td></tr>
+    <tr><td>2</td><td>亚克力瓶 30ml 保健品瓶</td><td class="right">139,855</td><td class="right">772</td><td class="right">+2.85%</td></tr>
+    <tr><td>3</td><td>大号亚克力瓶藏红花黑枸杞</td><td class="right">117,087</td><td class="right">156</td><td class="right">-26.38%</td></tr>
+    <tr style="background:#eef7ee"><td>6</td><td>白卡纸盒天地盖书型抽屉盒</td><td class="right">1</td><td class="right">1</td><td class="right"><strong>+32.26% ⬆</strong></td></tr>
+    <tr><td>7</td><td>55*80 NMN 亚克力瓶</td><td class="right">1</td><td class="right">1</td><td class="right">+2.82%</td></tr>
+    <tr style="background:#5a8d4e;color:#fff"><td>9</td><td><strong>瓦楞白卡纸礼盒书型盒定制</strong></td><td class="right">1</td><td class="right">1</td><td class="right"><strong>+70.54% 🔥</strong></td></tr>
+    <tr><td>10</td><td>大金盒亚克力燕窝海参礼盒</td><td class="right">1</td><td class="right">1</td><td class="right">-8.24%</td></tr>
+    <tr style="background:#fdecea"><td>4</td><td>210*210*40 锁扣燕窝亚克力盒</td><td class="right">1</td><td class="right">1</td><td class="right"><strong>-35.71% ⬇</strong></td></tr>
+    <tr style="background:#fdecea"><td>5</td><td>45*100 内胆 63ml 粉剂瓶</td><td class="right">1</td><td class="right">1</td><td class="right">-29.79%</td></tr>
+  </table>
+
+  <div class="callout">
+    <h3>🔥 搜索增长风口排序（V12 行动指南）</h3>
+    <ol>
+      <li><strong>瓦楞白卡纸礼盒书型盒定制 +70.54%</strong> — 强烈风口，立即卡位</li>
+      <li><strong>白卡纸盒天地盖书型抽屉盒 +32.26%</strong> — 上升趋势</li>
+      <li>9*8.5 透明药瓶软胶囊 +14.39% — 中等上升</li>
+      <li>NMN 亚克力瓶 +2.82% — 西医补缺词验证（V8 战略）</li>
+      <li>30ml 保健品瓶 +2.85% — 持稳</li>
+    </ol>
+    <p><strong>降温方向（建议砍/不再投入）</strong>：锁扣燕窝盒 -35.71% / 粉剂瓶 -29.79% / 藏红花黑枸杞 -26.38% / 燕窝礼盒 -8.24%</p>
+  </div>
+
+  <h3>⑤ {{店铺名}}浏览流失商品 TOP10（被同行抢走的具体 SKU）</h3>
+  <table class="matrix">
+    <tr><th>#</th><th>{{店铺名}}商品</th><th class="right">流失金额</th><th class="right">流失人数</th><th>流失率</th></tr>
+    <tr style="background:#fdecea"><td>1</td><td><strong>188*168*55 高档亚克力燕窝海参包装盒</strong></td><td class="right"><strong>¥61,740</strong></td><td class="right">3</td><td>100%</td></tr>
+    <tr style="background:#fdecea"><td>2</td><td>70*100 亚克力六角石斛胶囊塑料瓶</td><td class="right">¥42,000</td><td class="right">1</td><td>100%</td></tr>
+    <tr><td>3</td><td>定制亚克力塑料双层胶囊瓶</td><td class="right">¥18,283</td><td class="right">7</td><td>100%</td></tr>
+    <tr><td>4</td><td>245*125*55 透明海参人参虫草礼盒</td><td class="right">¥4,380</td><td class="right">3</td><td>100%</td></tr>
+    <tr style="background:#fff3e6"><td>5</td><td>亚克力塑料双层胶囊瓶（{{店铺名}}主力 SKU）</td><td class="right">¥4,095</td><td class="right">8</td><td><strong>57.14%</strong></td></tr>
+    <tr><td>6</td><td>218*143*55 亚克力盒燕窝海参</td><td class="right">¥3,840</td><td class="right">1</td><td>100%</td></tr>
+    <tr><td>7</td><td>9*15 PET 透明广口瓶蜂蜜花茶</td><td class="right">¥3,009</td><td class="right">3</td><td>100%</td></tr>
+    <tr><td>8</td><td>亚克力瓶 30ml（{{店铺名}} SKU03）</td><td class="right">¥2,009</td><td class="right">1</td><td>12.50%</td></tr>
+    <tr><td>9</td><td>透明小药瓶内胆双层孢子油粉</td><td class="right">¥1,673</td><td class="right">2</td><td>100%</td></tr>
+    <tr><td>10</td><td>7*12 PET 蜂蜜储存瓶</td><td class="right">¥1,057</td><td class="right">5</td><td>100%</td></tr>
+  </table>
+
+  <div class="callout danger">
+    <h3>🚨 流失结构性洞察</h3>
+    <ul>
+      <li><strong>TOP1-2-4-6 全部是亚克力礼盒类</strong>（燕窝/海参/虫草/人参礼盒）= {{店铺名}}这一类目<strong>整体流失合计 ¥73,200</strong></li>
+      <li>流失率 100% 的商品 8/10 个 → 这些 SKU 的<strong>详情页/标题/价格被同行直接秒杀</strong></li>
+      <li>{{店铺名}} TOP1 主力（亚克力胶囊瓶）流失率 57.14% = 8 人浏览 5 个跳走，<strong>主力商品也守不住</strong></li>
+    </ul>
+  </div>
+
+  <h3>⑥ 三大流失方向 + 5 月行动（V12 战略升级）</h3>
+  <table class="matrix">
+    <tr><th>方向</th><th>整改动作</th><th>对照对手</th></tr>
+    <tr>
+      <td><strong>① 燕窝海参亚克力礼盒类</strong>（流失 ¥73,200）</td>
+      <td>详情页 / 价格 / 主图全面对照整改</td>
+      <td>平阳时拓 + 温州同亨</td>
+    </tr>
+    <tr>
+      <td><strong>② 西医补缺词类</strong>（鱼油/NMN/蛋白粉/孢子油）</td>
+      <td>V8 西医补缺词战略加速落地</td>
+      <td>广州盈塑</td>
+    </tr>
+    <tr style="background:#eef7ee">
+      <td><strong>③ 瓦楞白卡纸礼盒书型盒</strong>（搜索 +70.54% 风口）</td>
+      <td>立即卡位 · 标题 / 主图 / P4P 三轨同投</td>
+      <td>—（趋势风口，先发优势）</td>
+    </tr>
+  </table>
+
+  <h3>⑦ 四级对标体系（V12 升级）</h3>
+  <table class="matrix">
+    <tr><th>级别</th><th>对手</th><th>监控频次</th><th>聚焦点</th></tr>
+    <tr><td><span class="tag-gap">🔴 战略对手</span></td><td>平阳时拓包装（流量+交易+流失三高 · 本地）</td><td>周度</td><td>流量来源 / 主推商品 / 价格</td></tr>
+    <tr><td><span class="tag-gap">🔴 BSR 高分对标</span></td><td>瑞安姜氏工艺（响应 99% / 回头率 61%）</td><td>周度</td><td>话术 / 老客维系</td></tr>
+    <tr><td><span class="tag-mid">🟡 流失承接 TOP3</span></td><td>广州盈塑 / 昆明首奎 / 广东文塑</td><td>月度</td><td>关键词截胡（西医词）</td></tr>
+    <tr><td><span class="tag-mid">🟡 本地次要</span></td><td>温州同亨 / 温州裕飞</td><td>月度</td><td>价格策略</td></tr>
+  </table>
+</section>
+
+
+
+<!-- V14 替换 · 附 D 竞店实测情报 + 真营销策划 -->
+<section class="with-break">
+  <h2>附 D · 7 家竞店实测情报 + {{店铺名}}真营销策划（V14 升级）</h2>
+
+  <div class="callout good">
+    <h3>✅ 抓取状态：用户手动过验证码后 7 家全扫</h3>
+    <p>V13 撞验证码停在推测方案。V14 用户手动过验证码后，<strong>7 家竞店店铺前台全扫完成</strong>，本附章升级为<em>真实数据驱动</em>的营销策划。</p>
+  </div>
+
+  <h3>① 7 家竞店店铺基本面 vs {{店铺名}}（实测）</h3>
+  <table class="matrix">
+    <tr><th>#</th><th>店铺</th><th>地区</th><th>服务分</th><th>回头率</th><th>粉丝</th><th>钻级</th><th>显式促销</th></tr>
+    <tr style="background:#fff3e6"><td>0</td><td><strong>{{店铺名}}（基线）</strong></td><td>{{店铺城市}}</td><td class="right">4.5</td><td class="right">46.1%</td><td class="right">1.5k</td><td>一钻</td><td>AI 营销</td></tr>
+    <tr style="background:#fdecea"><td>1</td><td><strong>平阳时拓 ⭐⭐⭐</strong></td><td>平阳</td><td class="right">4.5</td><td class="right"><strong>62.6%</strong></td><td class="right">1.2k</td><td><strong>三钻</strong></td><td>无显式</td></tr>
+    <tr style="background:#fdecea"><td>2</td><td><strong>瑞安姜氏 ⭐⭐</strong></td><td>瑞安</td><td class="right"><strong>5.0</strong></td><td class="right"><strong>60.9%</strong></td><td class="right">982</td><td>定制榜 TOP5</td><td>无显式</td></tr>
+    <tr><td>3</td><td>广东文塑</td><td>江门</td><td class="right">4.0</td><td class="right">46.8%</td><td class="right"><strong>7.5k</strong></td><td><strong>三钻</strong></td><td>无显式</td></tr>
+    <tr><td>4</td><td>广州盈塑</td><td>广州</td><td class="right">4.5</td><td class="right">50.0%</td><td class="right">526</td><td>—</td><td>无显式</td></tr>
+    <tr><td>5</td><td>昆明首奎</td><td>昆明</td><td class="right"><strong>5.0</strong></td><td class="right"><strong>56.0%</strong></td><td class="right">351</td><td>—</td><td>无显式</td></tr>
+    <tr><td>6</td><td>温州同亨</td><td>温州</td><td class="right"><strong>5.0</strong></td><td class="right">35.4%</td><td class="right">1.0k</td><td>—</td><td><strong>满 1000 减 20</strong> ⭐</td></tr>
+    <tr><td>7</td><td>温州裕飞</td><td>{{所在县}}</td><td class="right">4.0</td><td class="right">49.2%</td><td class="right">337</td><td>一钻</td><td>无显式</td></tr>
+  </table>
+
+  <div class="callout danger">
+    <h3>🎯 真·头号本地威胁修正：从瑞安姜氏 → 平阳时拓</h3>
+    <p>V12/V13 把瑞安姜氏列为头号对手（基于 BSR 推断）。V14 实测后<strong>升级为平阳时拓</strong>：</p>
+    <ul>
+      <li><strong>回头率 62.6%</strong>（{{店铺名}} 46.1% · 领先 16.5pp · 行业最高）</li>
+      <li><strong>三钻工厂</strong>（{{店铺名}}一钻 · 钻级领先 2 档）</li>
+      <li><strong>4 个 SKU 已售 10 万+件</strong>（{{店铺名}}主力月销 45 件 · 量级悬殊）</li>
+      <li><strong>类目 100% 重叠</strong>（保健品瓶 · 虫草/石斛/西洋参/藏红花全类目）</li>
+      <li><strong>地理 100% 重叠</strong>（浙江温州本地）</li>
+      <li>价格 ¥0.7-5.0（vs {{店铺名}} ¥1.10-15）— 显著低价</li>
+    </ul>
+  </div>
+
+  <h3>② 平阳时拓主推 SKU 销量数据（炸弹级）</h3>
+  <table class="matrix">
+    <tr><th>价格</th><th>商品</th><th>已售</th></tr>
+    <tr style="background:#fdecea"><td class="right">¥1.0</td><td>现货透明胶囊保健品瓶</td><td class="right"><strong>10 万+</strong></td></tr>
+    <tr style="background:#fdecea"><td class="right">¥1.2</td><td>定制高档胶囊亚克力瓶</td><td class="right"><strong>10 万+</strong></td></tr>
+    <tr style="background:#fdecea"><td class="right">¥1.3</td><td>现货塑料亚克力瓶虫草西洋参</td><td class="right"><strong>10 万+</strong></td></tr>
+    <tr style="background:#fdecea"><td class="right">¥2.0</td><td>透明食品级 pet 塑料瓶石斛</td><td class="right"><strong>10 万+</strong></td></tr>
+    <tr><td class="right">¥1.0</td><td>现货透明塑料胶囊亚克力瓶</td><td class="right">7.3 万+</td></tr>
+    <tr><td class="right">¥0.7</td><td>透明冬虫夏草瓶子</td><td class="right">7.2 万+</td></tr>
+    <tr><td class="right">¥2.2</td><td>坚果休闲食品干货蜂蜜瓶</td><td class="right">7.2 万+</td></tr>
+    <tr><td class="right">¥0.9</td><td>定制胶囊亚克力瓶</td><td class="right">2.9 万+</td></tr>
+  </table>
+  <p style="font-size:9.5pt;color:#666">→ 平阳时拓"低价 + 销量 + 定制"三位一体，是{{店铺名}}<strong>每个 SKU 都打得过</strong>但<strong>没拿到流量</strong>的根源。</p>
+
+  <h3>③ 唯一显式店铺促销情报（7 家全扫结果）</h3>
+  <table class="matrix">
+    <tr><th>店铺</th><th>显式促销活动</th><th>折扣率</th><th>{{店铺名}}参考</th></tr>
+    <tr style="background:#fff3e6"><td><strong>温州同亨</strong></td><td><strong>满 1000 元减 20 元（领券）</strong></td><td class="right">-2%</td><td>对照配置</td></tr>
+    <tr><td>其余 6 家（{{店铺名}}流失对手）</td><td>无显式店铺级 banner</td><td class="right">—</td><td>—</td></tr>
+  </table>
+
+  <div class="callout">
+    <h3>关键洞察：1688 包装类目"裸奔不打折"是主流</h3>
+    <p><strong>7 家中 6 家无显式店铺级促销</strong>。这意味着 1688 包装类商家普遍把营销武器下沉到：</p>
+    <ol>
+      <li><strong>商品级低价</strong>（盈塑 ¥0.86 / 同亨 ¥0.25 / 平阳 ¥0.7 / 首奎 ¥0.7）</li>
+      <li><strong>关键词覆盖</strong>（盈塑西医词 · 平阳/姜氏中医词）</li>
+      <li><strong>销量数字背书</strong>（平阳 10 万+ × 4 SKU · 姜氏 10 万+ × 1 SKU）</li>
+      <li><strong>服务承诺标配</strong>（48 小时发货 + 混批 + 现货）</li>
+    </ol>
+    <p>{{店铺名}}当前缺位的就是这 4 件武器。</p>
+  </div>
+
+  <h3>④ 价格区间全景对比</h3>
+  <table class="matrix">
+    <tr><th>店铺</th><th>主推 SKU 价格</th><th>加权均价</th><th>vs {{店铺名}}</th></tr>
+    <tr style="background:#fff3e6"><td><strong>{{店铺名}}</strong></td><td>¥1.10 - ¥15.00</td><td>¥4-10</td><td>基线</td></tr>
+    <tr><td>温州同亨</td><td>¥0.25 - ¥1.39</td><td>¥0.80</td><td>{{店铺名}}是其 5-12 倍</td></tr>
+    <tr><td>昆明首奎</td><td>¥0.70 - ¥2.00</td><td>¥1.20</td><td>{{店铺名}}是其 3.3-8.3 倍</td></tr>
+    <tr><td>瑞安姜氏</td><td>¥1.00 - ¥2.50</td><td>¥1.50</td><td>{{店铺名}}是其 2.7-6.7 倍</td></tr>
+    <tr><td>广州盈塑</td><td>¥0.86 - ¥2.60</td><td>¥1.50</td><td>{{店铺名}}是其 2.7-6.7 倍</td></tr>
+    <tr><td>平阳时拓</td><td>¥0.70 - ¥5.00</td><td>¥1.50</td><td>{{店铺名}}是其 2.7-3.0 倍</td></tr>
+    <tr><td>温州裕飞</td><td>¥0.52 - ¥3.80</td><td>¥1.80</td><td>{{店铺名}}是其 2.2-5.5 倍</td></tr>
+  </table>
+  <p style="font-size:9.5pt;color:#666">→ {{店铺名}}价格高于所有对手 — 这不是缺点，是<strong>高客单 / 定制礼盒</strong>模型的体现。但<strong>引流款必须接近对手价格</strong>（¥0.99-1.50）才能截胡客户进店。</p>
+
+  <h3>⑤ 头号威胁排序（V14 实测重排）</h3>
+  <table class="matrix">
+    <tr><th>排名</th><th>对手</th><th>威胁理由</th><th>对策</th></tr>
+    <tr style="background:#fdecea"><td>1</td><td><strong>平阳时拓</strong></td><td>本地+三钻+回头率 62.6%+10w 销量 ×4 SKU</td><td>SKU 价格带对照 + 服务承诺补齐</td></tr>
+    <tr style="background:#fdecea"><td>2</td><td><strong>瑞安姜氏</strong></td><td>本地+服务分 5.0+回头率 60.9%+定制榜 TOP5</td><td>服务质量对标</td></tr>
+    <tr><td>3</td><td>广东文塑</td><td>外地+三钻+7.5k 粉丝</td><td>体量赶不上 · 守差异化</td></tr>
+    <tr><td>4</td><td>广州盈塑</td><td>外地+西医补缺词战略验证</td><td>关键词截胡（鱼油/NMN）</td></tr>
+    <tr><td>5</td><td>昆明首奎</td><td>外地+服务分 5.0+食品罐品类</td><td>类目边界守</td></tr>
+    <tr><td>6</td><td>温州同亨</td><td>本地+品类 PVC 盒不重叠</td><td>错位竞争 · 跟进满减</td></tr>
+    <tr><td>7</td><td>温州裕飞</td><td>本地+商品体验 3.0 弱于{{店铺名}}</td><td>弱对手 · 不主动打</td></tr>
+  </table>
+
+  <h3>⑥ {{店铺名}} 5 月营销策划（V14 真营销策划版 · 拍板用）</h3>
+
+  <div class="module">
+    <div class="module-header">
+      <span class="module-no">P0</span>
+      <span class="module-title">必做 · 服务分 + 标配承诺补齐</span>
+      <span class="module-tag"><span class="tag-gap">本月必上</span></span>
+    </div>
+    <ol>
+      <li><strong>服务分 4.5 → 5.0</strong>（对标平阳时拓 / 瑞安姜氏 / 同亨 / 首奎四家 5.0 满分）
+        <ul>
+          <li>新灯塔履约率 88% → 95%（用平台协商发货工具）</li>
+          <li>新灯塔退款处理时长 21h → 8h（建立 4h 首响 SLA）</li>
+          <li>新灯塔旺旺满意度 86.67% → 92%（复杂咨询模板化）</li>
+        </ul>
+      </li>
+      <li><strong>"48 小时发货"标配承诺</strong>：嵌入所有主推 SKU 标题 + 详情页主视觉
+        <ul>
+          <li>对标同亨 / 裕飞已显式承诺 · {{店铺名}}目前未在前台显著呈现</li>
+        </ul>
+      </li>
+      <li><strong>"现货 + 混批"标配承诺</strong>：对标同亨 / 裕飞
+        <ul>
+          <li>详情页加"现货 vs 定制"流程对比块</li>
+          <li>混批阈值定到 5 件起（与同亨持平）</li>
+        </ul>
+      </li>
+      <li><strong>申请金牌制造钻级</strong>（6/6 已达成）+ 启动冲二钻</li>
+    </ol>
+  </div>
+
+  <div class="module">
+    <div class="module-header">
+      <span class="module-no">P1</span>
+      <span class="module-title">选做 · 引流款 + 关键词截胡</span>
+      <span class="module-tag"><span class="tag-mid">推荐做</span></span>
+    </div>
+    <ol>
+      <li><strong>3-5 个西医词引流款</strong>（截胡广州盈塑）
+        <ul>
+          <li>SKU：鱼油瓶 / NMN 瓶 / 蛋白粉瓶 / 钙片瓶 / 胶原蛋白瓶</li>
+          <li>定价：¥0.99-1.50（与盈塑均价 ¥1.50 接近）</li>
+          <li>50 件起订 · 引流到{{店铺名}}主力定制礼盒页</li>
+        </ul>
+      </li>
+      <li><strong>店铺级满减</strong>（对照同亨"满 1000 减 20"上调到攻势版）
+        <ul>
+          <li>满 ¥1000 减 ¥30（同亨 +50%）</li>
+          <li>满 ¥3000 减 ¥150 / 满 ¥5000 减 ¥350</li>
+          <li>客单 ¥10k 触发 -3.5% 折扣</li>
+        </ul>
+      </li>
+      <li><strong>燕窝海参礼盒类专项满减</strong>（V12 流失 ¥73,200 方向）
+        <ul>
+          <li>满 100 件减 8% / 满 500 件减 12% + 免费 LOGO 印刷</li>
+        </ul>
+      </li>
+      <li><strong>瓦楞白卡纸礼盒书型盒</strong>（搜索 +70.54% 风口卡位）
+        <ul>
+          <li>100 件起订 ¥18 → ¥15（-17%）</li>
+          <li>满 500 件免费定制烫金 LOGO</li>
+        </ul>
+      </li>
+    </ol>
+  </div>
+
+  <div class="module">
+    <div class="module-header">
+      <span class="module-no">P2</span>
+      <span class="module-title">战略级 · 钻级冲榜 + 体量追赶</span>
+      <span class="module-tag"><span class="tag-good">3-6 月</span></span>
+    </div>
+    <ol>
+      <li><strong>保健品包装定制榜冲榜</strong>（瑞安姜氏 TOP5 / {{店铺名}}未上榜）
+        <ul>
+          <li>需提交平台审核 · 重点突出{{店铺名}}整套礼盒能力</li>
+        </ul>
+      </li>
+      <li><strong>三钻工厂目标</strong>（差 2 钻级 · 平阳时拓 / 广东文塑均三钻）</li>
+      <li><strong>VIP 会员体系</strong>对标姜氏 60.9% / 平阳 62.6% 回头率
+        <ul>
+          <li>成交满 ¥10,000 升 VIP 长期 9.5 折</li>
+          <li>满 ¥50,000 升 VIP+ 享专属客户经理</li>
+        </ul>
+      </li>
+    </ol>
+  </div>
+
+  <h3>⑦ 5 月排期（落地版）</h3>
+  <table class="matrix">
+    <tr><th>日期</th><th>动作</th><th>负责</th><th>对照对手</th></tr>
+    <tr><td>5-1 ~ 5-3</td><td>开通"全店包邮" + 配置满 1000 减 30 + 配置 5 个西医词引流款</td><td>运营</td><td>同亨/盈塑</td></tr>
+    <tr><td>5-1 ~ 5-3</td><td>所有主推 SKU 标题嵌入"48 小时发货"+"现货"+"混批"</td><td>运营</td><td>同亨/裕飞</td></tr>
+    <tr><td>5-5</td><td>申请金牌制造钻级 + 申请保健品包装定制榜</td><td>运营</td><td>姜氏 TOP5</td></tr>
+    <tr><td>5-7 ~ 5-15</td><td>VIP 会员体系上线 + 老客复购券发放</td><td>客户运营</td><td>姜氏 60.9%/平阳 62.6%</td></tr>
+    <tr><td>5-15 ~ 5-17</td><td>燕窝海参礼盒满减首场（V12 流失 ¥73,200 方向）</td><td>运营</td><td>同亨满 1000-20</td></tr>
+    <tr><td>5-20</td><td>P4P 优质计划立项 · 关键词审计（西医词截胡盈塑）</td><td>运营</td><td>盈塑鱼油 TOP1</td></tr>
+    <tr><td>5-26</td><td>月度体检 V15（带本月活动数据复盘）</td><td>分析+运营</td><td>—</td></tr>
+    <tr><td>5-30 ~ 5-31</td><td>月末清仓 · 限时 8.8 折 + 瓦楞礼盒风口卡位</td><td>运营</td><td>—</td></tr>
+  </table>
+
+  <div class="callout good">
+    <h3>预期闭环</h3>
+    <p>P0 + P1 同步推进，预计：</p>
+    <ul>
+      <li>新灯塔分 4.0 → 4.4（4 个 3.0 子项各 +1 分 · 距 4.5 金冠仍差 0.1）</li>
+      <li>5 月 GMV +50%（V12 已识 7 天爆发 +109%，需稳住趋势）</li>
+      <li>P4P ROI 提升 30%（西医词截胡 + 优质计划立项）</li>
+      <li>回头率 46% → 50%（VIP 会员体系 + 老客复购券）</li>
+      <li>毛利损失 8-15%（满减让利可控）</li>
+    </ul>
+  </div>
+</section>
+
+<!-- V10 战略目标 -->
+<section class="with-break">
+  <h2>附 A · V10 战略目标</h2>
+
+  <div class="callout">
+    <h3>3 个月战略目标（截止 {{3月战略目标日期}}）</h3>
+    <ol>
+      <li><strong>新灯塔分 4.0 → 4.5 星金冠</strong>（解锁金冠商品积分 + 商品成长核心指标）</li>
+      <li><strong>占类目排名 82 → 50</strong>（包装-塑料二级，进 TOP60）</li>
+      <li><strong>询盘 599 → 900</strong>（含 5/6/7 月新增 300）</li>
+      <li><strong>新买家 26 → 60</strong>（拉新 2.3 倍）</li>
+      <li><strong>主品依赖度 60% → 40%</strong>（新增 2 个 GMV ≥ ¥50k 的爆品）</li>
+      <li><strong>SKA 年框消耗节奏</strong>：稳定在月化 ¥8.3 万 ± 5%</li>
+      <li><strong>定制咨询承接 SOP</strong>：30/24/48 三级时效全员落地</li>
+    </ol>
+  </div>
+
+  <h3>5 月行动表（立即启动）</h3>
+  <table class="matrix">
+    <tr><th>优先级</th><th>动作</th><th>负责</th><th>截止</th></tr>
+    <tr><td><span class="tag-gap">P0 命门</span></td><td>加工专区 tab 装修（工艺矩阵+案例+SOP）</td><td>运营+设计</td><td>5-7</td></tr>
+    <tr><td><span class="tag-gap">P0 命门</span></td><td>详情页统一定制区块（印错包赔强化）</td><td>运营</td><td>5-10</td></tr>
+    <tr><td><span class="tag-gap">P0 命门</span></td><td>退款处理时长 21h → 8h SLA</td><td>客服</td><td>5-15</td></tr>
+    <tr><td><span class="tag-gap">P0 命门</span></td><td>履约率 88% → 95%（协商发货工具）</td><td>履约</td><td>5-31</td></tr>
+    <tr><td><span class="tag-mid">P1 高</span></td><td>9 个僵尸爆品砍/优化决策</td><td>运营</td><td>5-12</td></tr>
+    <tr><td><span class="tag-mid">P1 高</span></td><td>140 未分类商品归类</td><td>运营</td><td>5-15</td></tr>
+    <tr><td><span class="tag-mid">P1 高</span></td><td>105 机会商品分批接入 P4P</td><td>运营</td><td>5-31（每周 10 个）</td></tr>
+    <tr><td><span class="tag-mid">P1 高</span></td><td>1 个 P4P "优质计划" 立项</td><td>运营</td><td>5-20</td></tr>
+    <tr><td><span class="tag-mid">P1 高</span></td><td><strong>运费模板对照官方建议（5 项核对）</strong></td><td>运营+财务</td><td>5-7</td></tr>
+    <tr><td><span class="tag-mid">P1 高</span></td><td><strong>申请金牌制造钻级</strong>（6 项已达成）</td><td>运营</td><td>5-5</td></tr>
+    <tr><td><span class="tag-mid">P1 高</span></td><td><strong>103 高级加权商品激活方案</strong>（资产/激活剪刀差）</td><td>运营</td><td>5-15</td></tr>
+    <tr><td><span class="tag-ok">P2 中</span></td><td>瑞安姜氏 + 贝缇 TOP20 流量词抓</td><td>分析</td><td>5-10</td></tr>
+    <tr><td><span class="tag-ok">P2 中</span></td><td>极限词全量扫描</td><td>合规</td><td>5-15</td></tr>
+    <tr><td><span class="tag-ok">P2 中</span></td><td>"全店包邮"开通 ROI 试算</td><td>财务</td><td>5-20</td></tr>
+    <tr><td><span class="tag-ok">P2 中</span></td><td>客户 ABC 分层 · TOP20 名单</td><td>客户运营</td><td>5-31</td></tr>
+  </table>
+</section>
+
+<!-- 数据快照参考 -->
+<section>
+  <h2>附 B · 本次实测数据快照清单</h2>
+  <p>所有原始数据已落盘到 <code>~/projects/jc-1688/02-数据快照/{{报告日期}}/</code>：</p>
+  <ul>
+    <li><strong>前台公开数据_店铺工厂档案.md</strong> — 服务分 / 回头率 / 工厂硬实力 / 14 家竞品</li>
+    <li><strong>新灯塔_BSR数据.md</strong> — 4 大维度 9 子项完整分值 + 同行均值 + 优秀线</li>
+    <li><strong>P4P_数字营销数据.md</strong> — 营销分 / 年框累消 / 12 爆品 / SKA 权益</li>
+    <li><strong>活动报名+违规扣分.md</strong> — AI 活动营销 / 待处理违规 0 / 4 月活动</li>
+    <li><strong>补充数据_30天+标签+本地对手.md</strong>（V11 新增）— 30 天数据 / 标签盘点 / 金牌钻级 / 本地对手收口 / 运费模板对照</li>
+  </ul>
+
+  <div class="callout">
+    <h3>下次月度体检（5-26）需要补抓的数据</h3>
+    <ol>
+      <li>"我的活动"页（具体已报名活动列表）— 本次 React 渲染未完成</li>
+      <li>违规历史明细（iframe 嵌套未拿到）</li>
+      <li>P4P 关键词级消耗 → 询盘 ROI 表（需抓导出 CSV）</li>
+      <li>姜氏 + 贝缇 TOP20 引流词抓取</li>
+      <li>新灯塔售后维度疑似存在的额外子项（评级"差"但只看到 2 子项 → 数学矛盾）</li>
+    </ol>
+  </div>
+
+  <p style="margin-top:8mm;text-align:center;color:#999;font-size:9pt;letter-spacing:2px;">
+    — {{客户内部团队}} · Claude 协同编制 · {{报告日期}} · V10 数据实测版 —
+  </p>
+</section>
+
+</body>
+</html>

@@ -3,7 +3,7 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width,initial-scale=1">
-<title>1688 店铺体检引擎 · 控制台 v2.0</title>
+<title>1688 店铺体检引擎 · 控制台 v3.0</title>
 <style>
   :root {
     --primary: #c9482b;
@@ -20,20 +20,15 @@
   * { box-sizing: border-box; margin: 0; padding: 0; }
   html, body {
     font-family: "PingFang SC","Hiragino Sans GB","Microsoft YaHei",sans-serif;
-    color: var(--ink);
-    background: var(--bg);
-    min-height: 100vh;
-    line-height: 1.6;
+    color: var(--ink); background: var(--bg);
+    min-height: 100vh; line-height: 1.6;
   }
   body { padding: 30px 20px; }
   .container { max-width: 720px; margin: 0 auto; }
 
-  /* Header */
   header {
-    background: var(--surface);
-    border-radius: 8px;
-    padding: 22px 26px;
-    margin-bottom: 18px;
+    background: var(--surface); border-radius: 8px;
+    padding: 22px 26px; margin-bottom: 18px;
     border-left: 6px solid var(--primary);
     box-shadow: 0 2px 8px rgba(201,72,43,0.08);
   }
@@ -49,12 +44,9 @@
   }
   header .badge.good { background: var(--good); }
 
-  /* Section */
   section {
-    background: var(--surface);
-    border-radius: 8px;
-    padding: 22px 26px;
-    margin-bottom: 16px;
+    background: var(--surface); border-radius: 8px;
+    padding: 22px 26px; margin-bottom: 16px;
     box-shadow: 0 1px 4px rgba(0,0,0,0.04);
   }
   section h2 {
@@ -63,7 +55,6 @@
     font-weight: 700;
   }
 
-  /* Login check */
   .login-check {
     display: flex; align-items: center; gap: 14px;
     padding: 14px 16px; background: var(--primary-soft); border-radius: 5px;
@@ -76,7 +67,6 @@
   }
   .login-check a:hover { background: var(--primary-dark); }
 
-  /* Radio group */
   .radio-group { display: flex; flex-direction: column; gap: 10px; }
   .radio-card {
     display: flex; align-items: flex-start; gap: 12px;
@@ -93,7 +83,6 @@
   .radio-card .r-title { font-weight: 700; font-size: 11.5pt; color: var(--ink); margin-bottom: 2px; }
   .radio-card .r-desc { font-size: 10pt; color: var(--muted); }
 
-  /* Action chips */
   .actions {
     display: grid; grid-template-columns: 1fr 1fr 1fr; gap: 10px; margin-top: 4px;
   }
@@ -103,75 +92,80 @@
     transition: all 0.15s;
   }
   .action:hover { border-color: var(--primary); background: var(--primary-soft); }
-  .action.selected {
-    border-color: var(--primary); background: var(--primary-soft);
-  }
+  .action.selected { border-color: var(--primary); background: var(--primary-soft); }
   .action .a-title { font-weight: 700; font-size: 11.5pt; color: var(--primary-dark); margin-bottom: 4px; }
   .action .a-desc { font-size: 9.5pt; color: var(--muted); line-height: 1.45; }
 
-  /* Generate button */
-  .generate-btn {
-    width: 100%; padding: 16px; font-size: 13pt; font-weight: 700;
-    background: var(--primary); color: #fff; border: none; border-radius: 5px;
-    cursor: pointer; letter-spacing: 1px;
-    transition: background 0.15s;
+  .run-btn {
+    width: 100%; padding: 18px; font-size: 14pt; font-weight: 700;
+    background: var(--primary); color: #fff; border: none; border-radius: 6px;
+    cursor: pointer; letter-spacing: 1.5px;
+    transition: all 0.15s;
   }
-  .generate-btn:hover { background: var(--primary-dark); }
+  .run-btn:hover:not(:disabled) { background: var(--primary-dark); }
+  .run-btn:disabled { background: #aaa; cursor: not-allowed; }
+  .run-btn.running { background: var(--warn); }
 
-  /* Output */
-  .output {
-    background: #1d1d1f; color: #e0e0e0; padding: 18px;
-    border-radius: 5px; font-family: "Menlo","Consolas",monospace;
-    font-size: 10pt; line-height: 1.7; white-space: pre-wrap;
-    margin-top: 10px; max-height: 360px; overflow-y: auto;
+  /* 进度日志区 */
+  .progress {
+    background: #1d1d1f; color: #d0d0d0;
+    border-radius: 5px; padding: 14px 16px;
+    font-family: "Menlo","Consolas",monospace;
+    font-size: 9.5pt; line-height: 1.65;
+    margin-top: 14px; max-height: 480px; overflow-y: auto;
+    white-space: pre-wrap; word-break: break-word;
   }
-  .copy-btn {
-    background: var(--good); color: #fff; border: none;
-    padding: 10px 18px; font-size: 11pt; font-weight: 600;
-    border-radius: 4px; cursor: pointer; margin-top: 8px;
-  }
-  .copy-btn.copied { background: #2c7a5c; }
-  .copy-btn:hover { opacity: 0.92; }
+  .progress .log-line { color: #d0d0d0; }
+  .progress .log-status { color: #6cc6e8; font-weight: 600; }
+  .progress .log-error { color: #ff6b5a; font-weight: 600; }
+  .progress .log-done { color: #6cd964; font-weight: 700; }
 
-  /* Help block */
   .help {
     background: #fff8e8; border-left: 3px solid var(--warn);
     padding: 12px 16px; font-size: 10.5pt; line-height: 1.65;
-    margin-top: 12px; border-radius: 4px;
+    border-radius: 4px; margin-bottom: 14px;
   }
   .help b { color: var(--warn); }
-  .help ol { margin-left: 22px; margin-top: 4px; }
+  .help ul { margin-left: 22px; margin-top: 4px; }
 
-  /* Why-only-one block */
   .why-block {
     background: #f0f7f0; border-left: 3px solid var(--good);
     padding: 12px 16px; font-size: 10pt; line-height: 1.65;
-    border-radius: 4px; color: #3a5e34;
+    border-radius: 4px; color: #3a5e34; margin-top: 16px;
   }
   .why-block b { color: var(--good); }
 
-  /* Footer */
   footer {
     text-align: center; font-size: 9pt; color: var(--muted);
     padding: 18px 0; letter-spacing: 1px;
   }
+
+  .server-status {
+    position: fixed; top: 16px; right: 16px;
+    padding: 6px 12px; border-radius: 12px;
+    font-size: 9.5pt; font-weight: 600;
+    background: #fef2f2; color: #b13a26; border: 1px solid #f3c2bb;
+  }
+  .server-status.connected { background: #eef7ee; color: #3a5e34; border-color: #c1dfb8; }
 </style>
 </head>
 <body>
+
+<div class="server-status" id="server-status">⚪ 检测后端中...</div>
+
 <div class="container">
 
 <header>
   <h1>🎯 1688 店铺体检引擎</h1>
-  <div class="subtitle">控制台 v2.0 · 极简模式 · 1 个字段 + 1 次点击 → 触发词复制完成</div>
+  <div class="subtitle">控制台 v3.0 · 真·端到端 · 1 次点击 → 全自动跑 + 网页实时进度</div>
   <div class="badges">
     <span class="badge good">合规</span>
     <span class="badge">不存密码</span>
-    <span class="badge">5 个字段全自动抓</span>
-    <span class="badge">5 秒决策</span>
+    <span class="badge">零复制粘贴</span>
+    <span class="badge">网页内全程</span>
   </div>
 </header>
 
-<!-- Step 1: Login Check -->
 <section>
   <h2>① 检查 Chrome 登录态（必做一次）</h2>
   <div class="login-check">
@@ -183,7 +177,6 @@
   </div>
 </section>
 
-<!-- Step 2: Only ONE decision -->
 <section>
   <h2>② 这家店铺以后可能商业化吗？</h2>
   <div class="radio-group" id="commercial-group">
@@ -210,15 +203,12 @@
     </label>
   </div>
 
-  <div class="why-block" style="margin-top: 16px">
-    <b>为什么只问这一个？</b><br>
-    其他字段（店铺名 / 二级域名 / 主营类目 / SKA 身份 / 项目短名）都能在你登录的 1688 工作台里自动抓到——让你抄一遍是反人类。Claude 接管后第一步就是进 work.1688.com 抓这些信息。<br>
-    <br>
-    <b>你只需要做一件事</b>：决定这家店未来要不要商业化对待（影响项目骨架完整度）。
+  <div class="why-block">
+    <b>为什么只问这一个？</b>
+    其他字段（店铺名 / 二级域名 / 主营类目 / SKA 身份 / 项目短名）Claude 接管后会自动从 work.1688.com 抓取。owner 决策项只剩"商业化路径"这一个。
   </div>
 </section>
 
-<!-- Step 3: Action -->
 <section>
   <h2>③ 选择动作</h2>
   <div class="actions">
@@ -237,39 +227,43 @@
   </div>
 </section>
 
-<!-- Step 4: Generate -->
 <section>
-  <h2>④ 生成 Claude 触发词</h2>
-  <button class="generate-btn" id="generate">生成触发词 + 复制到剪贴板</button>
-
-  <div class="output" id="output" style="display:none"></div>
-  <button class="copy-btn" id="copy-btn" style="display:none">📋 复制到剪贴板</button>
+  <h2>④ 一键执行</h2>
 
   <div class="help">
-    <b>下一步</b>
-    <ol>
-      <li>点上面"复制到剪贴板"按钮</li>
-      <li>切到 Claude Code 会话</li>
-      <li>粘贴 → 回车</li>
-      <li>Claude 接管已登录的 Chrome，自动抓店铺信息 + 数据 + 生成 PDF</li>
-      <li>报告 PDF 自动落到桌面 + git push</li>
-    </ol>
+    <b>点下方按钮后</b>
+    <ul>
+      <li>本地 server 调用 Claude Code 子进程（claude -p）</li>
+      <li>Claude 自动接管已登录 Chrome → 抓店铺信息 → 抓 7 份数据 → 渲染 PDF</li>
+      <li>整个过程在网页里实时显示进度日志</li>
+      <li>完成后 PDF 自动落到桌面 + git push</li>
+    </ul>
   </div>
+
+  <button class="run-btn" id="run-btn">🚀 一键执行</button>
+
+  <div class="progress" id="progress" style="display:none"></div>
 </section>
 
-<footer>1688 店铺体检引擎 · engine-v1.2 · 2026-04-26 · 极简模式 · 桌面双击即用</footer>
+<footer>1688 店铺体检引擎 · engine-v1.3 · 2026-04-26 · 真·端到端 · 0 复制粘贴</footer>
 
 </div>
 
 <script>
+  // 后端连通性检测
+  fetch('/').then(r => {
+    document.getElementById('server-status').textContent = '🟢 后端已连接';
+    document.getElementById('server-status').classList.add('connected');
+  }).catch(() => {
+    document.getElementById('server-status').textContent = '🔴 后端未启动';
+  });
+
   // 持久化
-  const commercialRadios = document.querySelectorAll('input[name="commercial"]');
-  const savedCommercial = localStorage.getItem('jc1688_v2_commercial');
+  const savedCommercial = localStorage.getItem('jc1688_v3_commercial');
   if (savedCommercial) {
-    commercialRadios.forEach(r => {
+    document.querySelectorAll('input[name="commercial"]').forEach(r => {
       if (r.value === savedCommercial) {
         r.checked = true;
-        // 同步 selected 样式
         document.querySelectorAll('.radio-card').forEach(c => c.classList.remove('selected'));
         r.closest('.radio-card').classList.add('selected');
       }
@@ -283,7 +277,7 @@
       card.classList.add('selected');
       const radio = card.querySelector('input[type="radio"]');
       radio.checked = true;
-      localStorage.setItem('jc1688_v2_commercial', radio.value);
+      localStorage.setItem('jc1688_v3_commercial', radio.value);
     });
   });
 
@@ -298,7 +292,7 @@
   });
 
   // 生成触发词
-  document.getElementById('generate').addEventListener('click', () => {
+  function buildPrompt() {
     const commercial = document.querySelector('input[name="commercial"]:checked').value;
     const commercialText = {
       full: '完整路径（可能商业化，套四件套 + 引擎解耦）',
@@ -307,9 +301,8 @@
     }[commercial];
     const today = new Date().toISOString().split('T')[0];
 
-    let trigger = '';
     if (selectedAction === 'init') {
-      trigger = `新建 1688 店铺体检（自动抓基本信息）
+      return `新建 1688 店铺体检（自动抓基本信息）
 
 商业化对待：${commercialText}
 创建日期：${today}
@@ -327,8 +320,7 @@
 
 【Step 1 · 自动生成项目英文短名】
 店铺主体名拼音首字母 + "-1688体检"
-（如"浙江金驰包装"→ "zjjc-1688体检"）
-冲突时加数字后缀（zjjc2-1688体检）
+冲突时加数字后缀
 
 【Step 2-7 · 按引擎 SOP 套模板】
 - 建项目骨架 ~/projects/<英文短名>/ + 9 个子目录
@@ -339,78 +331,109 @@
 - 首次 commit
 - 报告项目路径 + 抓到的店铺基本信息确认 + 下一步触发词`;
     } else if (selectedAction === 'monthly') {
-      trigger = `跑 1688 月度体检（自动识别当前店铺）
+      return `跑 1688 月度体检（自动识别当前店铺）
 
 报告日期：${today}
 
-执行 SOP（按引擎 ~/projects/_1688店铺体检引擎/CLAUDE.md）：
-
 【Step 0 · 自动识别当前登录店铺】
-进 work.1688.com 抓当前店铺主体名 → 匹配 ~/projects/*-1688体检/ 项目
+进 work.1688.com 抓店铺主体名 → 匹配 ~/projects/*-1688体检/
 
-如未匹配到 → 报错并提示先"新建 1688 店铺体检"
-
-【Step 1-8 · 月度体检全流程】
+【Step 1-8 · 月度体检】
 1. 加载上下文（CLAUDE.md + 上份月度报告 + 上月数据快照）
 2. 数据抓取（10+ 入口逐项 · 撞验证码立即停下让我手动）
 3. 落档 02-数据快照/${today}/ 7 份 MD
 4. 套用 8 模块四段式 + 4 附录骨架填充
 5. HTML → Chrome headless → PDF
-6. PDF → PNG OCR 自检（封面 + 关键模块）
+6. PDF → PNG OCR 自检
 7. 桌面归档（删旧版 + 放新版）
-8. git commit + push origin main
-
-每抓到一类数据立即报告并存档。`;
-    } else { // weekly
+8. git commit + push origin main`;
+    } else {
       const w = Math.ceil((new Date() - new Date(new Date().getFullYear(), 0, 1)) / 86400000 / 7);
-      trigger = `跑 1688 周报 W${w}（自动识别当前店铺）
+      return `跑 1688 周报 W${w}（自动识别当前店铺）
 
 报告日期：${today}
 周次：W${w}
 
-执行：
-
 【Step 0 · 自动识别当前登录店铺】
-进 work.1688.com 抓当前店铺 → 匹配 ~/projects/*-1688体检/ 项目
+进 work.1688.com 抓店铺主体名 → 匹配 ~/projects/*-1688体检/
 
-【Step 1-6 · 周度复盘全流程】
+【Step 1-6 · 周度复盘】
 1. 加载上下文（CLAUDE.md + 上周复盘）
-2. 抓近 7 天数据（生意参谋首页店铺诊断 7 项核心指标）
-3. 与上周数据 diff（异动 ±10% 必标记）
-4. 异动根因推测（搜索词变化 / 竞品动作 / 季节性）
+2. 抓近 7 天数据
+3. 与上周数据 diff
+4. 异动根因推测
 5. 产出 04-周度复盘/W${w}_${today}.md
-6. git commit + push
-
-不渲染 PDF（周报只产 MD）。`;
+6. git commit + push`;
     }
+  }
 
-    // 显示
-    const output = document.getElementById('output');
-    output.textContent = trigger;
-    output.style.display = 'block';
-    document.getElementById('copy-btn').style.display = 'inline-block';
+  // 一键执行
+  const runBtn = document.getElementById('run-btn');
+  const progress = document.getElementById('progress');
 
-    // 自动复制
-    navigator.clipboard.writeText(trigger).then(() => {
-      const btn = document.getElementById('copy-btn');
-      btn.textContent = '✅ 已复制 · 切到 Claude 粘贴执行';
-      btn.classList.add('copied');
-    });
+  runBtn.addEventListener('click', async () => {
+    runBtn.disabled = true;
+    runBtn.textContent = '⏳ Claude 跑起来了，看下方日志...';
+    runBtn.classList.add('running');
+    progress.style.display = 'block';
+    progress.innerHTML = '';
+
+    const prompt = buildPrompt();
+    appendLog('status', '📨 发送触发词到本地 server');
+
+    try {
+      const resp = await fetch('/run', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ prompt }),
+      });
+
+      if (!resp.ok || !resp.body) {
+        throw new Error(`HTTP ${resp.status}`);
+      }
+
+      const reader = resp.body.getReader();
+      const decoder = new TextDecoder('utf-8');
+      let buffer = '';
+      while (true) {
+        const { done, value } = await reader.read();
+        if (done) break;
+        buffer += decoder.decode(value, { stream: true });
+        let nl;
+        while ((nl = buffer.indexOf('\n\n')) !== -1) {
+          const chunk = buffer.slice(0, nl);
+          buffer = buffer.slice(nl + 2);
+          if (chunk.startsWith('data: ')) {
+            try {
+              const obj = JSON.parse(chunk.slice(6));
+              appendLog(obj.type, obj.data);
+              if (obj.type === 'done') {
+                runBtn.disabled = false;
+                runBtn.textContent = '🚀 再跑一次';
+                runBtn.classList.remove('running');
+              }
+            } catch (e) {
+              appendLog('log', chunk);
+            }
+          }
+        }
+      }
+    } catch (e) {
+      appendLog('error', `❌ 网络错误：${e.message}（确认本地 server 在 :5688 运行）`);
+      runBtn.disabled = false;
+      runBtn.textContent = '🚀 重试';
+      runBtn.classList.remove('running');
+    }
   });
 
-  // 手动复制按钮
-  document.getElementById('copy-btn').addEventListener('click', () => {
-    const text = document.getElementById('output').textContent;
-    navigator.clipboard.writeText(text).then(() => {
-      const btn = document.getElementById('copy-btn');
-      btn.textContent = '✅ 已复制';
-      btn.classList.add('copied');
-      setTimeout(() => {
-        btn.textContent = '📋 复制到剪贴板';
-        btn.classList.remove('copied');
-      }, 2000);
-    });
-  });
+  function appendLog(type, data) {
+    if (!data && type !== 'done') return;
+    const div = document.createElement('div');
+    div.className = `log-${type}`;
+    div.textContent = data || '';
+    progress.appendChild(div);
+    progress.scrollTop = progress.scrollHeight;
+  }
 </script>
 
 </body>
